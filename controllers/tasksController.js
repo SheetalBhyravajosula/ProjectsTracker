@@ -27,13 +27,13 @@ exports.createTask = function (req, res) {
   taskService.createTask(task, function (result) {
     if (result == false) {
       console.log("error in controller", err);
-      res.send("could not save task");
+      res.status(500).send("Could not save task");
     } else if (result == "Exists") {
       console.log("Could not save task already exists", result);
-      res.send("Could not save task already exists");
+      res.status(500).send("Could not save task already exists");
     } else {
       console.log("Saved successfully", result);
-      res.send("Saved successfully",result);
+      res.status(201).send("Created task successfully");
     }
   });
 };
@@ -43,10 +43,30 @@ exports.deleteTask = function (req, res) {
   taskService.deleteTask(task, function (result) {
     if (result == false) {
       console.log("error in deleting", err);
-      res.send("could not delete task");
+      res.status(500).send("Could not save task");
+    } else if (result=="DoesNotExist") {
+      console.log("Could not delete task of ID/Description", task, result);
+      res.status(404).send("Record not found");
     } else {
       console.log("Deleted task of ID/Description", task);
-      res.send("Deleted Task");
+      res.status(200).send("Deleted task successfully");
+    }
+  });
+};
+
+exports.modifyTask = function (req, res) {
+  var updateTask = req.body.updateTask;
+  var taskId = req.params.task;
+  taskService.modifyTask(updateTask, taskId, function (result) {
+    if (result == false) {
+      console.log("error in modifying");
+      res.status(500).send("Could not modify task");
+    } else if (!result) {
+      console.log("Could not modify task of ID/Description", taskId, result);
+      res.status(404).send("Record not found");
+    } else {
+      console.log("Modified task of ID/Description", taskId, result);
+      res.status(200).send("Modified task successfully");
     }
   });
 };

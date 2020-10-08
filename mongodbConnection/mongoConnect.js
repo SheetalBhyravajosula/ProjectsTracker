@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var mongoDBURI = require('../config.json').mongoDbURI;
-mongoose.connect(mongoDBURI, { useNewUrlParser: true , useUnifiedTopology: true});
+mongoose.connect(mongoDBURI,{ useFindAndModify: false, useNewUrlParser: true , useUnifiedTopology: true});
 
 exports.connect=function(callback){
     var db = mongoose.connection;

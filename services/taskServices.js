@@ -1,5 +1,6 @@
 var express = require("express");
 var TaskSchema = require("../schemas/tasksSchema");
+
 exports.getTasks = function (callback) {
   TaskSchema.find({}, function (err, result) {
     if (err) {
@@ -10,9 +11,10 @@ exports.getTasks = function (callback) {
     }
   });
 };
+
 exports.createTask = function (task, callback) {
   console.log(task);
-  TaskSchema.findOne({TaskID:task.taskId}, function (err, result) {
+  TaskSchema.findOne({ TaskID: task.taskId }, function (err, result) {
     if (err) {
       console.log("error in retrieving tasks while creating", err);
       callback(false);
@@ -45,16 +47,62 @@ exports.createTask = function (task, callback) {
 };
 
 exports.deleteTask = function (task, callback) {
-  TaskSchema.deleteOne(
+  TaskSchema.exists(
     {
       $or: [{ TaskID: task }, { TaskDescription: task }],
     },
+    function (error, bool) {
+      if (error) {
+        console.log("error in deleting ");
+        callback(false);
+      } else if (!bool) {
+        callback("DoesNotExist");
+      } else {
+        TaskSchema.deleteOne(
+          {
+            $or: [{ TaskID: task }, { TaskDescription: task }],
+          },
+          function (err, result) {
+            if (err) {
+              console.log("error while deleting in services", err);
+              callback(false);
+            } else {
+              console.log(
+                "Deleted task successfully having ID/Description",
+                task,
+                result
+              );
+              callback(result);
+            }
+          }
+        );
+      }
+    }
+  );
+};
+
+exports.modifyTask = function (updateTask, task, callback) {
+  var modify_task = {
+    TaskID: updateTask.taskId,
+    TaskDescription: updateTask.taskDescription,
+    TaskTypeID: updateTask.taskTypeId,
+    ProjectID: updateTask.projectId,
+    EmpID: updateTask.empId,
+    TaskStartDate: updateTask.taskStartDate,
+    TaskEndDate: updateTask.taskEndDate,
+    Duration: updateTask.duration,
+  };
+  TaskSchema.findOneAndUpdate(
+    {
+      $or: [{ TaskID: task }, { TaskDescription: task }],
+    },
+    modify_task,
     function (err, result) {
       if (err) {
-        console.log("error while deleting in services", err);
+        console.log("error while modifying", err);
         callback(false);
       } else {
-        console.log("Deleted task successfully having ID/Description", task);
+        console.log(result);
         callback(result);
       }
     }

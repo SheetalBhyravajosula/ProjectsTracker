@@ -7,6 +7,6 @@ var taskController= require('../controllers/tasksController.js')
 router.get('/getTasks',taskController.getTasks);
 router.post('/createTask',taskController.createTask);
 router.get('/deleteTask/:task',taskController.deleteTask);
-router.get('/modifyTask/:task')
+router.post('/modifyTask/:task',taskController.modifyTask);
 
 module.exports = router;
