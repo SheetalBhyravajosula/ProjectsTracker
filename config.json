@@ -1,3 +1,4 @@
 {
-    "mongoDbURI":"mongodb://127.0.0.1:27017/WSR"
+    "mongoDbURI":"mongodb://127.0.0.1:27017/WSR",
+    "JWT_SECRET":"thisisourfirstpi"
 }
