@@ -19,7 +19,7 @@ const TaskSchema = new Schema({
                 ref : 'Project'
              },
     Employee : {
-                 type : String,
+                 type : mongoose.Schema.Types.ObjectId,
                  required : true,
                  ref : 'Employee'
                },
