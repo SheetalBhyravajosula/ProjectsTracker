@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-var JWT_SECRET = require('../config.json').JWT_SECRET;
+const JWT_SECRET = require('../config.json').JWT_SECRET;
 
 const schema = mongoose.Schema;
 
