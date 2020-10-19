@@ -1,72 +1,90 @@
-var express = require("express");
-var taskService = require("../services/taskServices");
+const express = require("express");
+const taskService = require("../services/taskServices");
 
-exports.getTasks = function (req, res) {
-  //const db = req.app.locals.db;
-  taskService.getTasks(function (tasks) {
-    if (tasks == false) {
-      console.log("error in controller", err);
-      res.send("couldnt retrieve tasks");
-    } else {
-      res.send(tasks);
-    }
-  });
+exports.getTasks = function(req, res) {
+    taskService.getTasks(function(result) {
+        if (result == false) {
+            res.status(500).json({
+                status: 'Internal Server Error',
+                message: `Could not retrieve tasks error occured`
+              });
+        }else {
+            res.status(200).json({
+                status: 'success',
+                data: result
+              });
+        }
+    });
 };
-exports.createTask = function (req, res) {
-  // var task={
-  //     taskId:req.body.taskId,
-  //     taskDescription:req.body.taskDescription,
-  //     taskTypeId:req.body.taskTypeId,
-  //     projectId:req.body.projectId,
-  //     empId:req.body.projectId,
-  //     taskStartDate:req.body.startDate,
-  //     taskEndDate:req.body.endDate,
-  //     duration:req.body.duration
-  // }
-  var task = req.body.task;
-  taskService.createTask(task, function (result) {
-    if (result == false) {
-      console.log("error in controller", err);
-      res.status(500).send("Could not save task");
-    } else if (result == "Exists") {
-      console.log("Could not save task already exists", result);
-      res.status(500).send("Could not save task already exists");
-    } else {
-      console.log("Saved successfully", result);
-      res.status(201).send("Created task successfully");
-    }
-  });
-};
-
-exports.deleteTask = function (req, res) {
-  var task = req.params.task;
-  taskService.deleteTask(task, function (result) {
-    if (result == false) {
-      console.log("error in deleting", err);
-      res.status(500).send("Could not save task");
-    } else if (result=="DoesNotExist") {
-      console.log("Could not delete task of ID/Description", task, result);
-      res.status(404).send("Record not found");
-    } else {
-      console.log("Deleted task of ID/Description", task);
-      res.status(200).send("Deleted task successfully");
-    }
-  });
+exports.createTask = function(req, res) {
+    const task = req.body.task;
+    taskService.createTask(task, function(result) {
+        if (result == false) {
+            res.status(500).json({
+                status: 'Internal Server Error',
+                message: `Could not create task ${task} error occured`
+              });
+        } else if (result=="Exists") {
+            res.status(500).json({
+                status: 'failure',
+                message: `Could not create task ${task}:${result} already exists`
+              });
+        } else {
+            res.status(200).json({
+                status: 'success',
+                data: result
+              });
+        }
+    });
 };
 
-exports.modifyTask = function (req, res) {
-  var updateTask = req.body.updateTask;
-  var taskId = req.params.task;
-  taskService.modifyTask(updateTask, taskId, function (result) {
-    if (result == false) {
-      console.log("error in modifying");
-      res.status(500).send("Could not modify task");
-    } else if (!result) {
-      console.log("Could not modify task of ID/Description", taskId, result);
-      res.status(404).send("Record not found");
-    } else {
-      console.log("Modified task of ID/Description", taskId, result);
-      res.status(200).send("Modified task successfully");
-    }
-  });
+exports.deleteTask = function(req, res) {
+    const task = req.params.task;
+    const startDate = req.query.startDate || null;
+    const endDate = req.query.endDate || null;
+    taskService.deleteTask(task,startDate,endDate, function(result) {
+        if (result == false) {
+            res.status(500).json({
+                status: 'Internal Server Error',
+                message: `Could not delete task ${task} error occured`
+              });
+        } else if (result=="DoesNotExist") {
+            res.status(404).json({
+                status: 'failure',
+                message: `Could not modify task ${task}:${result} not found`
+              });
+        } else {
+            res.status(200).json({
+                status: 'success',
+                data: result
+              });
+        }
+    });
+};
+
+exports.modifyTask = function(req, res) {
+    const updateTask = req.body.updateTask;
+    const startDate = req.query.startDate || null;
+    const endDate = req.query.endDate || null;
+    const task = req.params.task;
+    console.log(updateTask);
+    taskService.modifyTask(updateTask, task, startDate, endDate,
+        function(result) {
+            if (result == false) {
+                res.status(500).json({
+                    status: 'Internal Server Error',
+                    message: `Could not modify task ${task} error occured`
+                  });
+            } else if (result=="DoesNotExist") {
+                res.status(404).json({
+                    status: 'failure',
+                    message: `Could not modify task ${task}:${result} not found`
+                  });
+            } else {
+                res.status(200).json({
+                    status: 'success',
+                    data: result
+                  });
+            }
+        });
 };

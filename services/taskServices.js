@@ -1,10 +1,10 @@
-var express = require("express");
-var TaskSchema = require("../schemas/tasksSchema");
+const TaskSchema = require("../schemas/tasksSchema");
+const exists = "Exists";
+const doesNotExist = "DoesNotExist";
 
 exports.getTasks = function (callback) {
   TaskSchema.find({}, function (err, result) {
     if (err) {
-      console.log("error in retrieving", err);
       callback(false);
     } else {
       callback(result);
@@ -13,98 +13,114 @@ exports.getTasks = function (callback) {
 };
 
 exports.createTask = function (task, callback) {
-  console.log(task);
-  TaskSchema.findOne({ TaskID: task.taskId }, function (err, result) {
-    if (err) {
-      console.log("error in retrieving tasks while creating", err);
-      callback(false);
-    }
-    if (result) {
-      console.log("this task already exists", result);
-      callback("Exists");
-    } else {
-      var new_task = new TaskSchema({
-        TaskID: task.taskId,
-        TaskDescription: task.taskDescription,
-        TaskTypeID: task.taskTypeId,
-        ProjectID: task.projectId,
-        EmpID: task.empId,
-        TaskStartDate: task.taskStartDate,
-        TaskEndDate: task.taskEndDate,
-        Duration: task.duration,
-      });
-      new_task.save(function (err, saved) {
-        if (err) {
-          console.log("error in saving in services", err);
-          callback(false);
-        } else {
-          console.log("saved successfully");
-          callback(saved);
-        }
-      });
-    }
-  });
-};
-
-exports.deleteTask = function (task, callback) {
   TaskSchema.exists(
     {
-      $or: [{ TaskID: task }, { TaskDescription: task }],
+      TaskDescription: task.taskDescription,
+      TaskStartDate: task.taskStartDate,
+      TaskEndDate: task.taskEndDate,
     },
     function (error, bool) {
       if (error) {
-        console.log("error in deleting ");
         callback(false);
-      } else if (!bool) {
-        callback("DoesNotExist");
+      } else if (bool) {
+        callback(exists);
       } else {
-        TaskSchema.deleteOne(
-          {
-            $or: [{ TaskID: task }, { TaskDescription: task }],
-          },
-          function (err, result) {
-            if (err) {
-              console.log("error while deleting in services", err);
-              callback(false);
-            } else {
-              console.log(
-                "Deleted task successfully having ID/Description",
-                task,
-                result
-              );
-              callback(result);
-            }
+        const new_task = new TaskSchema({
+          TaskDescription: task.taskDescription,
+          TaskType: task.taskType,
+          Project: task.project,
+          Employee: task.emp,
+          TaskStartDate: task.taskStartDate,
+          TaskEndDate: task.taskEndDate,
+          Duration: task.duration,
+        });
+        new_task.save(function (err, saved) {
+          if (err) {
+            callback(false);
+          } else {
+            callback(saved);
           }
-        );
+        });
       }
     }
   );
 };
 
-exports.modifyTask = function (updateTask, task, callback) {
-  var modify_task = {
-    TaskID: updateTask.taskId,
+exports.deleteTask = function (taskDesc,startDate,endDate, callback) {
+  if (startDate && endDate) {
+    TaskSchema.findOneAndDelete(
+      {
+        TaskDescription: taskDesc,
+        TaskEndDate: endDate,
+        TaskStartDate: startDate,
+      },
+      function (err, result) {
+        if (err) {
+          callback(false);
+        } else if(result==null){
+            callback(doesNotExist)
+        }else {
+          callback(result);
+        }
+      }
+    );
+  } else {
+    TaskSchema.findOneAndDelete(
+      { TaskDescription: taskDesc },
+      function (err, result) {
+        if (err) {
+          callback(false);
+        } else if(result==null){
+            callback(doesNotExist)
+        } else {
+          callback(result);
+        }
+      }
+    );
+  }
+};
+
+exports.modifyTask = function (updateTask,taskDesc,startDate,endDate,callback) {
+  const modify_task = {
     TaskDescription: updateTask.taskDescription,
-    TaskTypeID: updateTask.taskTypeId,
-    ProjectID: updateTask.projectId,
-    EmpID: updateTask.empId,
+    TaskType: updateTask.taskType,
+    Project: updateTask.project,
+    Employee: updateTask.emp,
     TaskStartDate: updateTask.taskStartDate,
     TaskEndDate: updateTask.taskEndDate,
     Duration: updateTask.duration,
   };
-  TaskSchema.findOneAndUpdate(
-    {
-      $or: [{ TaskID: task }, { TaskDescription: task }],
-    },
-    modify_task,
-    function (err, result) {
-      if (err) {
-        console.log("error while modifying", err);
-        callback(false);
-      } else {
-        console.log(result);
-        callback(result);
+  if (startDate && endDate) {
+    TaskSchema.findOneAndUpdate(
+      {
+        TaskDescription: taskDesc,
+        TaskEndDate: endDate,
+        TaskStartDate: startDate,
+      },
+      modify_task,
+      function (err, result) {
+        if (err) {
+          callback(false);
+        } else if(result==null){
+            callback(doesNotExist)
+        }else {
+          callback(result);
+        }
       }
-    }
-  );
+    );
+  } else {
+    TaskSchema.findOneAndUpdate(
+      { TaskDescription: taskDesc },
+      modify_task,
+      function (err, result) {
+        if (err) {
+          callback(false);
+        } else if(result==null){
+            callback(doesNotExist)
+        }else {
+          callback(result);
+        }
+      }
+    );
+  }
 };
