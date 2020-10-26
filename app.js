@@ -7,7 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var associatesRouter=require('./routes/associates');
-var tasksRouter=require('./routes/tasks')
+var tasksRouter=require('./routes/tasks');
+var projectsRouter=require('./routes/projects');
 
 var mongoose=require('./mongodbConnection/mongoConnect');
 
@@ -27,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/associates',associatesRouter);
 app.use('/tasks',tasksRouter);
+app.use('/projects',projectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

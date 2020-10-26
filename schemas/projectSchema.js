@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const projectSchema = new schema({    
+const projectSchema = new Schema({    
     ProjectName : {
                      type :String,
                      required : true,
