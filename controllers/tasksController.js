@@ -39,19 +39,19 @@ exports.createTask = function(req, res) {
 };
 
 exports.deleteTask = function(req, res) {
-    const task = req.params.task;
+    const taskDescription = req.params.taskDescription;
     const startDate = req.query.startDate || null;
     const endDate = req.query.endDate || null;
-    taskService.deleteTask(task,startDate,endDate, function(result) {
+    taskService.deleteTask(taskDescription,startDate,endDate, function(result) {
         if (result == false) {
             res.status(500).json({
                 status: 'Internal Server Error',
-                message: `Could not delete task ${task.taskDescription} error occured`
+                message: `Could not delete task ${taskDescription} error occured`
               });
         } else if (result=="DoesNotExist") {
             res.status(404).json({
                 status: 'failure',
-                message: `Could not modify task ${ttask.taskDescriptionask}:${result} not found`
+                message: `Could not modify task ${taskDescription}:${result} not found`
               });
         } else {
             res.status(200).json({
@@ -66,19 +66,19 @@ exports.modifyTask = function(req, res) {
     const updateTask = req.body.updateTask;
     const startDate = req.query.startDate || null;
     const endDate = req.query.endDate || null;
-    const task = req.params.task;
+    const taskDescription = req.params.taskDescription;
     console.log(updateTask);
-    taskService.modifyTask(updateTask, task, startDate, endDate,
+    taskService.modifyTask(updateTask, taskDescription, startDate, endDate,
         function(result) {
             if (result == false) {
                 res.status(500).json({
                     status: 'Internal Server Error',
-                    message: `Could not modify task ${task.taskDescription} error occured`
+                    message: `Could not modify task ${taskDescription} error occured`
                   });
             } else if (result=="DoesNotExist") {
                 res.status(404).json({
                     status: 'failure',
-                    message: `Could not modify task ${task.taskDescription}:${result} not found`
+                    message: `Could not modify task ${taskDescription}:${result} not found`
                   });
             } else {
                 res.status(200).json({

@@ -46,11 +46,11 @@ exports.createTask = function (task, callback) {
   );
 };
 
-exports.deleteTask = function (taskDesc,startDate,endDate, callback) {
+exports.deleteTask = function (taskDescription,startDate,endDate, callback) {
   if (startDate && endDate) {
     TaskSchema.findOneAndDelete(
       {
-        TaskDescription: taskDesc,
+        TaskDescription: taskDescription,
         TaskEndDate: endDate,
         TaskStartDate: startDate,
       },
@@ -66,7 +66,7 @@ exports.deleteTask = function (taskDesc,startDate,endDate, callback) {
     );
   } else {
     TaskSchema.findOneAndDelete(
-      { TaskDescription: taskDesc },
+      { TaskDescription: taskDescription },
       function (err, result) {
         if (err) {
           callback(false);
@@ -80,7 +80,7 @@ exports.deleteTask = function (taskDesc,startDate,endDate, callback) {
   }
 };
 
-exports.modifyTask = function (updateTask,taskDesc,startDate,endDate,callback) {
+exports.modifyTask = function (updateTask,taskDescription,startDate,endDate,callback) {
   const modify_task = {
     TaskDescription: updateTask.taskDescription,
     TaskType: updateTask.taskType,
@@ -93,7 +93,7 @@ exports.modifyTask = function (updateTask,taskDesc,startDate,endDate,callback) {
   if (startDate && endDate) {
     TaskSchema.findOneAndUpdate(
       {
-        TaskDescription: taskDesc,
+        TaskDescription: taskDescription,
         TaskEndDate: endDate,
         TaskStartDate: startDate,
       },
@@ -110,7 +110,7 @@ exports.modifyTask = function (updateTask,taskDesc,startDate,endDate,callback) {
     );
   } else {
     TaskSchema.findOneAndUpdate(
-      { TaskDescription: taskDesc },
+      { TaskDescription: taskDescription },
       modify_task,
       function (err, result) {
         if (err) {
