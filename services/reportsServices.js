@@ -8,7 +8,7 @@ exports.getTasksByEmpId = function (empId, startDate, endDate, callback) {
   EmployeeSchema.findOne({ EmployeeId: empId }, function (err, result) {
     if (err) {
       callback(false);
-    } else {
+    } else if(result) {
       if (startDate && endDate) {
         TaskSchema.find(
           {
@@ -62,6 +62,9 @@ exports.getTasksByEmpId = function (empId, startDate, endDate, callback) {
         });
       }
     }
+    else {
+        callback([])
+    }
   });
 };
 
@@ -74,7 +77,8 @@ exports.getTasksByProjectName = function (
   ProjectSchema.findOne({ ProjectName: projectName }, function (err, result) {
     if (err) {
       callback(false);
-    } else {
+    } 
+    else if(result) {
       if (startDate && endDate) {
         TaskSchema.find(
           {
@@ -128,6 +132,9 @@ exports.getTasksByProjectName = function (
         });
       }
     }
+    else {
+        callback([])
+    }
   });
 };
 
@@ -141,7 +148,7 @@ exports.getTasksByEmpIdAndProjectName = function (
   EmployeeSchema.findOne({ EmployeeId: empId }, function (err, result) {
     if (err) {
       callback(false);
-    } else {
+    } else if (result) {
       if (startDate && endDate) {
         TaskSchema.find(
           {
@@ -201,15 +208,46 @@ exports.getTasksByEmpIdAndProjectName = function (
         );
       }
     }
+    else {
+        callback([]);
+    }
   });
 };
 
-exports.getProjectsByCategory = function (category,callback) {
-    ProjectSchema.find({Category:category}, function (err, result) {
-      if (err) {
-        callback(false);
-      } else {
-        callback(result);
-      }
-    });
-  };
+exports.getProjectsByCategory = function (category, callback) {
+  ProjectSchema.find({ Category: category }, function (err, result) {
+    if (err) {
+      callback(false);
+    } else {
+      callback(result);
+    }
+  });
+};
+
+exports.getProjectsByProjectType = function (projectType, callback) {
+  ProjectSchema.find({ ProjectType: projectType }, function (err, result) {
+    if (err) {
+      callback(false);
+    } else {
+      callback(result);
+    }
+  });
+};
+
+exports.getEmployeesByProjectName = function (projectName, callback) {
+  ProjectSchema.findOne({ ProjectName: projectName }, function (err, result) {
+    if (err) {
+      callback(false);
+    } else if (result) {
+      EmployeeSchema.find({ Project: result._id }, function (error, employees) {
+        if (error) {
+          callback(false);
+        } else {
+          callback(employees);
+        }
+      });
+    } else {
+      callback([]);
+    }
+  });
+};

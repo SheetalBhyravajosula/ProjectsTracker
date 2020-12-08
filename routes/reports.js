@@ -8,7 +8,7 @@ router.get('/getTasksbyEmpID/:empId', reportController.getTasksByEmpId);
 router.get('/getTasksbyProjectName/:projectName', reportController.getTasksByProjectName);
 router.get('/getTasksbyEmpIdProjectName/:empId/:projectName', reportController.getTasksByEmpIdAndProjectName);
 router.get('/getProjectsbyCategory/:category', reportController.getProjectsByCategory);
-// router.get('/getProjects/:projectType', reportController.getProjectsByProjectType);
-// router.get('/getEmployees/:projectId', reportController.getEmployeesByProjectId);
+router.get('/getProjectsbyType/:projectType', reportController.getProjectsByProjectType);
+router.get('/getEmployeesbyProjectName/:projectName', reportController.getEmployeesByProjectName);
 
 module.exports = router;
