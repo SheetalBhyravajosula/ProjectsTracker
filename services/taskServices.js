@@ -26,13 +26,13 @@ exports.createTask = function (task, callback) {
         callback(exists);
       } else {
         const new_task = new TaskSchema({
-          TaskDescription: task.taskDescription,
-          TaskType: task.taskType,
-          Project: task.project,
-          Employee: task.employee,
-          TaskStartDate: task.taskStartDate,
-          TaskEndDate: task.taskEndDate,
-          Duration: task.duration,
+          TaskDescription: task.TaskDescription,
+          TaskType: task.TaskType,
+          Project: task.Project,
+          Employee: task.Employee,
+          TaskStartDate: task.TaskStartDate,
+          TaskEndDate: task.TaskEndDate,
+          Duration: task.Duration,
         });
         new_task.save(function (err, saved) {
           if (err) {
