@@ -10,6 +10,8 @@ var usersRouter = require('./routes/users');
 var employeesRouter=require('./routes/employees');
 var tasksRouter=require('./routes/tasks');
 var projectsRouter=require('./routes/projects');
+var reportsRouter=require('./routes/reports');
+
 
 var mongoose=require('./mongodbConnection/mongoConnect');
 
@@ -31,6 +33,7 @@ app.use('/users', usersRouter);
 app.use('/employees',employeesRouter);
 app.use('/tasks',tasksRouter);
 app.use('/projects',projectsRouter);
+app.use('/reports',reportsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
