@@ -15,6 +15,24 @@ exports.getProjects = function (req, res) {
     }
   });
 };
+
+exports.getProjectById = function (req, res) {
+  const id = req.params.id;
+  projectService.getProjectById(id,function (result) {
+    if (result == false) {
+      res.status(500).json({
+        status: "Internal Server Error",
+        message: `Could not retrieve projects error occured`,
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: result,
+      });
+    }
+  });
+};
+
 exports.createProject = function (req, res) {
   const project = req.body.project;
   console.log(project);
