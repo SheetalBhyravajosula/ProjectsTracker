@@ -5,6 +5,7 @@ const projectController = require('../controllers/projectsController.js')
 
 /* GET projects listing. */
 router.get('/getProjects', projectController.getProjects);
+router.get('/getProjectByID/:id',projectController.getProjectById)
 router.post('/createProject', projectController.createProject);
 router.get('/deleteProject/:projectName', projectController.deleteProject);
 router.post('/modifyProject/:projectName', projectController.modifyProject);

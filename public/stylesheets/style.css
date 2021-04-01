@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+th,
+    td {
+        padding: 20px;
+    }

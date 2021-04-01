@@ -12,6 +12,17 @@ exports.getProjects = function (callback) {
   });
 };
 
+exports.getProjectById = function (id,callback) {
+  projectSchema.findOne({_id : id}, function (err, result) {
+    if (err) {
+      callback(false);
+    } else {
+      callback(result);
+    }
+  });
+};
+
+
 exports.createProject = function (project, callback) {
   projectSchema.exists(
     {

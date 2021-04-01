@@ -1,0 +1,17 @@
+<div ng-cloak="" >
+    <md-content class="md-padding" layout-xs="column" layout="row">
+      <div flex-xs flex-gt-xs="50" layout="column">
+        <md-card ng-repeat="e in empData">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">{{e.EmployeeName}}</span>
+              <span class="md-subhead">{{e.EmployeeId}}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button>Edit</md-button>
+            <md-button>Delete</md-button>
+          </md-card-actions>
+        </md-card>
+    </md-content>
+  </div>
