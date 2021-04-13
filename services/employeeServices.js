@@ -25,10 +25,10 @@ exports.createEmployee = function (employee, callback) {
         callback(exists);
       } else {
         const new_employee = new employeeSchema({
-          EmployeeId: employee.employeeId,
-          EmployeeName: employee.employeeName,
-          BillRate: employee.billRate,
-          Project: employee.project,
+          EmployeeId: employee.EmployeeId,
+          EmployeeName: employee.EmployeeName,
+          BillRate: employee.BillRate,
+          Project: employee.Project,
         });
         new_employee.save(function (err, saved) {
           if (err) {
@@ -60,10 +60,10 @@ exports.deleteEmployee = function (employeeId, callback) {
 
 exports.modifyEmployee = function (updateEmployee, employeeId, callback) {
   const modify_employee = {
-    EmployeeID: updateEmployee.employeeId,
-    EmployeeName: updateEmployee.employeeName,
-    BillRate: updateEmployee.billRate,
-    Project: updateEmployee.project,
+    EmployeeId: updateEmployee.EmployeeId,
+    EmployeeName: updateEmployee.EmployeeName,
+    BillRate: updateEmployee.BillRate,
+    Project: updateEmployee.Project,
   };
   employeeSchema.findOneAndUpdate(
     { EmployeeId: employeeId },

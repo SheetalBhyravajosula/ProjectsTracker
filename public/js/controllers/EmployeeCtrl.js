@@ -1,39 +1,48 @@
 angular
-  .module("EmployeeController", [
-    "EmployeeService",
-    "ProjectService",
-    "ngMaterial",
-  ])
-  .controller("EmployeeController", [
-    "Employee",
-    "Project",
-    "$scope",
-    function (Employee, Project, $scope) {
-      $scope.empData = null;
-      this.employees = null;
-      Employee.getEmployees()
-        .then(function ({ data }) {
-          this.employees = data.data;
-          this.employees.forEach((emp) => {
-            Project.getProjectById(emp.Project)
-              .then(function ({ data }) {
-                if (data && data.data.ProjectName) {
-                  let value = this.employees.find(
-                    (e) => emp.EmployeeId == e.EmployeeId
-                  );
-                  this.employees.find(
-                    (e) => emp.EmployeeId == e.EmployeeId
-                  ).Project = data.data.ProjectName;
-                }
-              })
-              .catch(function (err) {
-                this.employees.Project = err;
-              });
-          });
-          $scope.empData = this.employees;
-        })
-        .catch(function (err) {
-          this.employees = err;
-        });
-    },
-  ]);
+    .module("EmployeeController", ["EmployeeService", "ProjectService", "ngMaterial" ])
+    .controller("EmployeeController", ["Employee", "Project", "$location", "$scope",
+        function(Employee, Project,$location, $scope) {
+            let vm=this;
+            $scope.employee = {};
+            $scope.empData = null;
+            vm.employees = null;
+            vm.getEmployeesAll = function(){
+                Employee.getEmployees()
+                .then(function({ data }) {
+                    vm.employees = data.data;
+                    vm.employees.forEach((emp) => {
+                        Project.getProjects().then(function({data}){
+                            vm.emp = emp;
+                            let projects=data.data;
+                            Project.setProjects(projects);
+                            let project = projects.find(id => id._id === emp.Project);
+                            vm.emp.Project=project.ProjectName;
+                        }).catch(function(err) {
+                                vm.employees.Project = err;
+                            });
+                    });
+                    $scope.empData = vm.employees;
+                })
+                .catch(function(err) {
+                    vm.employees = err;
+                });
+            }
+            vm.getEmployeesAll();
+            $scope.Edit = function(employee) {
+                Employee.setEmployee(employee);
+                $location.path('/employees/' + employee.EmployeeId);
+            }
+            $scope.AddNewEmployee =function(){
+                Employee.setEmployee(null);
+                $location.path('/employees/new');
+            }
+            $scope.Delete = function(employee){
+                Employee.deleteEmployee(employee).then(function(response){
+                    console.log(response);
+                }).catch(function(err){
+                    console.log(err);
+                });
+                vm.getEmployeesAll();
+            }
+        },
+    ]);

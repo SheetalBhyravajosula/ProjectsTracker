@@ -1,19 +1,17 @@
 angular
-    .module("ProjectController", ["ProjectService"])
-    .controller("ProjectController", [
-        "Project",
-        "$scope",
-        function(Project, $scope) {
-            $scope.projData = null;
-            $scope.display = function() {
-                Project.getProjects()
-                    .then(function({ data }) {
-                        $scope.projData = data.data;
-                    })
-                    .catch(function(err) {
-                        $scope.projData = err;
-                    });
-                
-            }
-        }
-    ]);
+  .module("ProjectController", ["ProjectService"])
+  .controller("ProjectController", [
+    "Project",
+    "$scope",
+    function (Project, $scope) {
+     $scope.projData= {};
+      Project.getProjects()
+        .then(function ({ data }) {
+          $scope.projData = data.data;
+          Project.setProjects(data.data);
+        })
+        .catch(function (err) {
+          $scope.projData = err;
+        });
+    },
+  ]);

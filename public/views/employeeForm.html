@@ -1,0 +1,19 @@
+<div class="formContainer">
+  <form novalidate class="simple-form">
+    <label>Name: <input type="text" ng-model="employee.EmployeeName" /></label
+    ><br />
+    <label>ID: <input type="number" ng-model="employee.EmployeeId" ng-disabled="disableID"/></label
+    ><br />
+    <label
+      >Project:
+      <select ng-model="employee.Project">
+        <option ng-repeat="p in projects" value="{{p.ProjectName}}">
+          {{p.ProjectName}}
+        </option>
+      </select></label
+    ><br />
+    <label>Bill Rate:<input type="text" ng-model="employee.BillRate" /></label
+    ><br />
+    <input type="button" ng-disabled="saveDisabled" ng-click="save(employee)" value="Submit"/>
+    </form>
+</div>
