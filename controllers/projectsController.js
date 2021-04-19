@@ -16,6 +16,22 @@ exports.getProjects = function (req, res) {
   });
 };
 
+exports.getProjectTypes = function (req, res) {
+  projectService.getProjectTypes(function (result) {
+    if (result == false) {
+      res.status(500).json({
+        status: "Internal Server Error",
+        message: `Could not retrieve project types error occured`,
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: result,
+      });
+    }
+  });
+};
+
 exports.getProjectById = function (req, res) {
   const id = req.params.id;
   projectService.getProjectById(id,function (result) {
@@ -46,6 +62,29 @@ exports.createProject = function (req, res) {
       res.status(500).json({
         status: "failure",
         message: `Could not create project ${project.projectName}:${result} already exists`,
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: result,
+      });
+    }
+  });
+};
+
+exports.createProjectType = function (req, res) {
+  const projectType = req.body.projectType;
+  console.log(projectType);
+  projectService.createProjectType(projectType, function (result) {
+    if (result == false) {
+      res.status(500).json({
+        status: "Internal Server Error",
+        message: `Could not create project ${projectType.Description} error occured`,
+      });
+    } else if (result == "Exists") {
+      res.status(500).json({
+        status: "failure",
+        message: `Could not create project ${projectType.Description}:${result} already exists`,
       });
     } else {
       res.status(200).json({

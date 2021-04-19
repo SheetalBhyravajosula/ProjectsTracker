@@ -18,6 +18,7 @@ angular.module("appRoutes", []).config([
       .when("/employees/:id", {
         templateUrl: "views/employeeForm.html",
         controller: "EmployeeFormController",
+        css: "stylesheets/employeeForm.css",
       })
       .when("/employees/new", {
         templateUrl: "views/employeeForm.html",
@@ -27,6 +28,14 @@ angular.module("appRoutes", []).config([
       .when("/projects", {
         templateUrl: "views/project.html",
         controller: "ProjectController",
+      })
+      .when("/projects/:name", {
+        templateUrl: "views/projectForm.html",
+        controller: "ProjectFormController",
+      })
+      .when("/projects/new", {
+        templateUrl: "views/projectForm.html",
+        controller: "ProjectFormController",
       })
       .otherwise({
         templateUrl: "views/home.html",

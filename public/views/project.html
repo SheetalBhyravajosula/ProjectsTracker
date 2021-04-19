@@ -1,5 +1,27 @@
-<div class="jumbotron">
-    <h1>Home Page 4 Life</h1>
-
-    <p>{{ projData }}</p>
+<div ng-cloak="">
+    <div class = "topnav">
+        <input type="text" placeholder="Search.." name="search" ng-model='searchText'>
+        <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        <input type="button" ng-click="AddNewProject()" value="Add New Project" />
+      </div>
+      <br>
+    <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="250px" >
+    <md-grid-tile ng-repeat="p in projData | filter:searchText">
+        <md-card style="width:100%;">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">Name: {{p.ProjectName}}</span>
+              <span class="md-subhead">Client Name: {{p.ClientName}}</span>
+              <span class="md-subhead">Onsite Count: {{p.OnsiteCount}}</span>
+              <span class="md-subhead">OffshoreCount: {{p.OffshoreCount}}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="View(p)">View</md-button>
+            <md-button ng-click="Edit(p)">Edit</md-button>
+            <md-button ng-click="Delete(p)">Delete</md-button>
+          </md-card-actions>
+        </md-card>
+    </md-grid-tile>
+  </md-grid-list>
 </div>

@@ -9,5 +9,7 @@ router.get('/getProjectByID/:id',projectController.getProjectById)
 router.post('/createProject', projectController.createProject);
 router.get('/deleteProject/:projectName', projectController.deleteProject);
 router.post('/modifyProject/:projectName', projectController.modifyProject);
+router.get('/getProjectTypes', projectController.getProjectTypes);
+router.post('/createProjectType', projectController.createProjectType);
 
 module.exports = router;

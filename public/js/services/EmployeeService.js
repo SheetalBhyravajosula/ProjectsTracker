@@ -20,9 +20,7 @@ angular
     this.setEmployee = function (employee) {
       this.employee = employee;
       this.saveDisable = true;
-      if(this.employee && this.employee.EmployeeId){
-        this.disableID = true;
-      }
+      this.disableID = this.employee && this.employee.EmployeeId;
     };
     
     this.updateEmployee = function (employee) {

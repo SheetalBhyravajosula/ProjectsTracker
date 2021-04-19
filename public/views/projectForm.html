@@ -1,0 +1,53 @@
+<div class="formContainer" ng-show="Edit">
+  <form novalidate class="simple-form">
+    <label
+      >Name:
+      <input
+        type="text"
+        ng-model="project.ProjectName"
+        ng-disabled="disableName" /></label
+    ><br />
+    <label>Category: <input type="text" ng-model="project.Category" /></label
+    ><br />
+    <label
+      >Project Type:
+      <select ng-model="project.ProjectType">
+        <option ng-repeat="p in projectTypes" value="{{p._id}}">
+          {{p._id}} {{p.Description}}
+        </option>
+      </select></label
+    ><br />
+    <label
+      >Client Name: <input type="text" ng-model="project.ClientName" /></label
+    ><br />
+    <label
+      >Technology: <input type="text" ng-model="project.Technology" /></label
+    ><br />
+    <label
+      >Onsite Count:
+      <input type="number" ng-model="project.OnsiteCount" /></label
+    ><br />
+    <label
+      >Offshore Count:
+      <input type="number" ng-model="project.OffshoreCount" /></label
+    ><br />
+    <input
+      type="button"
+      ng-disabled="saveDisabled"
+      ng-click="save(project)"
+      value="Submit"
+    />
+  </form>
+</div>
+<div class="formContainer" ng-hide="Edit">
+  <form novalidate class="simple-form">
+    <label>Name : </label> {{project.ProjectName}}<br />
+    <label>Category : </label> {{project.Category}}<br />
+    <label>Project Type : </label> {{project.ProjectType}} <br />
+    <label>Client Name : </label> {{project.ClientName}}<br />
+    <label>Technology : </label> {{project.Technology}}<br />
+    <label>Onsite Count : </label> {{project.OnsiteCount}}<br />
+    <label>Offshore Count : </label> {{project.OffshoreCount}}<br />
+    <input type="button" ng-click="EditProject()" value="Edit" />
+  </form>
+</div>
