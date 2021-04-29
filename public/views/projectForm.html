@@ -1,53 +1,53 @@
-<div class="formContainer" ng-show="Edit">
-  <form novalidate class="simple-form">
+<div class="formContainer" ng-show="ProjectFormCtrl.Edit">
+  <form class="simple-form" name="ProjectForm">
     <label
       >Name:
       <input
         type="text"
-        ng-model="project.ProjectName"
-        ng-disabled="disableName" /></label
+        ng-model="ProjectFormCtrl.project.ProjectName"
+        ng-disabled="ProjectFormCtrl.disableName" required/></label
     ><br />
-    <label>Category: <input type="text" ng-model="project.Category" /></label
+    <label>Category: <input type="text" ng-model="ProjectFormCtrl.project.Category" required/></label
     ><br />
     <label
       >Project Type:
-      <select ng-model="project.ProjectType">
-        <option ng-repeat="p in projectTypes" value="{{p._id}}">
+      <select ng-model="ProjectFormCtrl.project.ProjectType" required>
+        <option ng-repeat="p in ProjectFormCtrl.projectTypes" value="{{p._id}}">
           {{p._id}} {{p.Description}}
         </option>
       </select></label
     ><br />
     <label
-      >Client Name: <input type="text" ng-model="project.ClientName" /></label
+      >Client Name: <input type="text" ng-model="ProjectFormCtrl.project.ClientName" required/></label
     ><br />
     <label
-      >Technology: <input type="text" ng-model="project.Technology" /></label
+      >Technology: <input type="text" ng-model="ProjectFormCtrl.project.Technology" required/></label
     ><br />
     <label
       >Onsite Count:
-      <input type="number" ng-model="project.OnsiteCount" /></label
+      <input type="number" ng-model="ProjectFormCtrl.project.OnsiteCount" required/></label
     ><br />
     <label
       >Offshore Count:
-      <input type="number" ng-model="project.OffshoreCount" /></label
+      <input type="number" ng-model="ProjectFormCtrl.project.OffshoreCount" required/></label
     ><br />
     <input
       type="button"
-      ng-disabled="saveDisabled"
-      ng-click="save(project)"
+      ng-disabled="ProjectFormCtrl.saveDisabled || ProjectForm.$invalid"
+      ng-click="ProjectFormCtrl.save(ProjectFormCtrl.project)"
       value="Submit"
     />
   </form>
 </div>
-<div class="formContainer" ng-hide="Edit">
+<div class="formContainer" ng-hide="ProjectFormCtrl.Edit">
   <form novalidate class="simple-form">
-    <label>Name : </label> {{project.ProjectName}}<br />
-    <label>Category : </label> {{project.Category}}<br />
-    <label>Project Type : </label> {{project.ProjectType}} <br />
-    <label>Client Name : </label> {{project.ClientName}}<br />
-    <label>Technology : </label> {{project.Technology}}<br />
-    <label>Onsite Count : </label> {{project.OnsiteCount}}<br />
-    <label>Offshore Count : </label> {{project.OffshoreCount}}<br />
-    <input type="button" ng-click="EditProject()" value="Edit" />
+    <label>Name : </label> {{ProjectFormCtrl.project.ProjectName}}<br />
+    <label>Category : </label> {{ProjectFormCtrl.project.Category}}<br />
+    <label>Project Type : </label> {{ProjectFormCtrl.project.ProjectType}} <br />
+    <label>Client Name : </label> {{ProjectFormCtrl.project.ClientName}}<br />
+    <label>Technology : </label> {{ProjectFormCtrl.project.Technology}}<br />
+    <label>Onsite Count : </label> {{ProjectFormCtrl.project.OnsiteCount}}<br />
+    <label>Offshore Count : </label> {{ProjectFormCtrl.project.OffshoreCount}}<br />
+    <input type="button" ng-click="ProjectFormCtrl.EditProject()" value="Edit" />
   </form>
 </div>

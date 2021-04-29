@@ -3,36 +3,35 @@ angular
   .controller("ProjectController", [
     "Project",
     "$location",
-    "$scope",
-    function (Project, $location, $scope) {
+    function (Project, $location) {
       let vm = this;
-      $scope.projData = Project.projects;
+      vm.projData = Project.projects;
       vm.allProjects = function () {
         Project.getProjects()
           .then(function ({ data }) {
-            $scope.projData = data.data;
-            Project.setProjects($scope.projData);
+            vm.projData = data.data;
+            Project.setProjects(vm.projData);
           })
           .catch(function (err) {
-            $scope.projData = err;
+            vm.projData = err;
           });
       };
       vm.allProjects();
-      $scope.AddNewProject = function () {
+      vm.AddNewProject = function () {
         Project.setProject(null);
         $location.path("/projects/new");
       };
-      $scope.Edit = function (project) {
+      vm.Edit = function (project) {
         Project.setProject(project);
         Project.setFormType(true);
         $location.path("/projects/" + project.ProjectName);
       };
-      $scope.View = function (project) {
+      vm.View = function (project) {
         Project.setProject(project);
         Project.setFormType(false);
         $location.path("/projects/" + project.ProjectName);
       };
-      $scope.Delete = function (project) {
+      vm.Delete = function (project) {
         Project.deleteProject(project)
           .then(function (response) {
             console.log(response);

@@ -1,52 +1,53 @@
 angular
   .module("ProjectFormController", ["ProjectService"])
-  .controller("ProjectFormController", ["Project","$location","$scope",function (Project, $location, $scope) {
+  .controller("ProjectFormController", ["Project","$location",function (Project, $location) {
       let vm = this;
       var form = document.querySelector("form");
-      $scope.saveDisabled = Project.saveDisable;
-      $scope.disableName = Project.disableName;
+      vm.saveDisabled = Project.saveDisable;
+      vm.disableName = Project.disableName;
       form.addEventListener("change", function () {
-        if ($scope.saveDisabled) $scope.saveDisabled = false;
+        if (vm.saveDisabled) vm.saveDisabled = false;
       });
-      $scope.Edit = Project.Edit;
-      $scope.project = Project.project;
-      $scope.projects = Project.projects;
+      vm.Edit = Project.Edit;
+      vm.project = Project.project;
+      vm.projects = Project.projects;
+      vm.project.ProjectType = vm.project && vm.project.ProjectType.toString();
       Project.getProjectTypes().then(function(response){
         let newArray = response.data.data.filter((value) => Object.keys(value).length !== 0);
-        $scope.projectTypes=newArray;
+        vm.projectTypes=newArray;
       }).catch(function(err){
-        $scope.projectTypes=err.data;
+        vm.projectTypes=err.data;
       })
-      $scope.EditProject = function(){
-        $scope.Edit = true;
+      vm.EditProject = function(){
+        vm.Edit = true;
       }
-      $scope.save = function (proj) {
+      vm.save = function (proj) {
         let technology = proj.Technology.split(',');
         proj.Technology = technology;
         vm.p = proj;
         if (Project.project === null) {
           Project.createProject(vm.p)
             .then(function (response) {
-              $scope.disableName = true;
+              vm.disableName = true;
               console.log(response);
             })
             .catch(function (err) {
               console.log(err);
             });
-          Project.setProject($scope.project);
-          $scope.saveDisabled = Project.saveDisable;
+          Project.setProject(vm.project);
+          vm.saveDisabled = Project.saveDisable;
           $location.path('/projects');
         } else {
           Project.updateProject(vm.p)
             .then(function (response) {
-              $scope.disableName = true;
+              vm.disableName = true;
               console.log(response);
             })
             .catch(function (err) {
               console.log(err);
             });
-          Project.setProject($scope.project);
-          $scope.saveDisabled = Project.saveDisable;
+          Project.setProject(vm.project);
+          vm.saveDisabled = Project.saveDisable;
           $location.path('/projects');
         }
       };

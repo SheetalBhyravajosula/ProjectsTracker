@@ -1,10 +1,9 @@
-angular
-    .module("EmployeeController", ["EmployeeService", "ProjectService", "ngMaterial" ])
-    .controller("EmployeeController", ["Employee", "Project", "$location", "$scope",
-        function(Employee, Project,$location, $scope) {
-            let vm=this;
-            $scope.employee = {};
-            $scope.empData = null;
+angular.module("EmployeeController", ["EmployeeService", "ProjectService", "ngMaterial" ])
+    .controller("EmployeeController", ["Employee", "Project", "$location",
+        function(Employee, Project,$location) {
+            var vm=this;
+            vm.employee = {};
+            vm.empData = null;
             vm.employees = null;
             vm.getEmployeesAll = function(){
                 Employee.getEmployees()
@@ -21,7 +20,7 @@ angular
                                 vm.employees.Project = err;
                             });
                     });
-                    $scope.empData = vm.employees;
+                    vm.empData = vm.employees;
                     Employee.setEmployees(vm.employees);
                 })
                 .catch(function(err) {
@@ -29,15 +28,15 @@ angular
                 });
             }
             vm.getEmployeesAll();
-            $scope.Edit = function(employee) {
+            vm.Edit = function(employee) {
                 Employee.setEmployee(employee);
                 $location.path('/employees/' + employee.EmployeeId);
             }
-            $scope.AddNewEmployee =function(){
+            vm.AddNewEmployee =function(){
                 Employee.setEmployee(null);
                 $location.path('/employees/new');
             }
-            $scope.Delete = function(employee){
+            vm.Delete = function(employee){
                 Employee.deleteEmployee(employee).then(function(response){
                     console.log(response);
                 }).catch(function(err){

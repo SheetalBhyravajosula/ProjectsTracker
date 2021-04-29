@@ -1,19 +1,19 @@
 <div class="formContainer">
-  <form novalidate class="simple-form">
-    <label>Name: <input type="text" ng-model="employee.EmployeeName" /></label
+  <form class="simple-form" name= "EmployeeForm">
+    <label>Name: <input type="text" ng-model="EmployeeFormCtrl.employee.EmployeeName" required/></label
     ><br />
-    <label>ID: <input type="number" ng-model="employee.EmployeeId" ng-disabled="disableID"/></label
+    <label>ID: <input type="number" ng-model="EmployeeFormCtrl.employee.EmployeeId" ng-disabled="EmployeeFormCtrl.disableID" required/></label
     ><br />
     <label
       >Project:
-      <select ng-model="employee.Project">
-        <option ng-repeat="p in projects" value="{{p.ProjectName}}">
+      <select ng-model="EmployeeFormCtrl.employee.Project" required>
+        <option ng-repeat="p in EmployeeFormCtrl.projData" value="{{p.ProjectName}}">
           {{p.ProjectName}}
         </option>
       </select></label
     ><br />
-    <label>Bill Rate:<input type="text" ng-model="employee.BillRate" /></label
+    <label>Bill Rate:<input type="text" ng-model="EmployeeFormCtrl.employee.BillRate" required/></label
     ><br />
-    <input type="button" ng-disabled="saveDisabled" ng-click="save(employee)" value="Submit"/>
+    <input type="button" ng-disabled="EmployeeFormCtrl.saveDisabled || EmployeeForm.$invalid" ng-click="EmployeeFormCtrl.save(EmployeeFormCtrl.employee)" value="Submit"/>
     </form>
 </div>
