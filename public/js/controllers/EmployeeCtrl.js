@@ -22,6 +22,7 @@ angular
                             });
                     });
                     $scope.empData = vm.employees;
+                    Employee.setEmployees(vm.employees);
                 })
                 .catch(function(err) {
                     vm.employees = err;

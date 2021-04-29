@@ -1,1 +1,1 @@
-angular.module('sampleApp', ['ngRoute','angularCSS','ngMaterial', 'appRoutes', 'MainCtrl', 'EmployeeController', 'EmployeeService','ProjectController','ProjectService','EmployeeFormController','ProjectFormController']);
+angular.module('sampleApp', ['ngRoute','angularCSS','ngMaterial','appRoutes', 'MainCtrl', 'NewTaskController' ,'TaskController','TaskService','EmployeeController', 'EmployeeService','ProjectController','ProjectService','EmployeeFormController','ProjectFormController','ReportService']);

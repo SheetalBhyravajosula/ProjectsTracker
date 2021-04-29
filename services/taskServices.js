@@ -1,4 +1,5 @@
 const TaskSchema = require("../schemas/tasksSchema");
+const TaskTypeSchema = require("../schemas/taskTypeSchema");
 const exists = "Exists";
 const doesNotExist = "DoesNotExist";
 
@@ -12,12 +13,49 @@ exports.getTasks = function (callback) {
   });
 };
 
+exports.getTaskTypes = function (callback) {
+  TaskTypeSchema.find({}, function (err, result) {
+    if (err) {
+      callback(false);
+    } else {
+      callback(result);
+    }
+  });
+};
+
+exports.createTaskType = function (taskType, callback) {
+  TaskTypeSchema.exists(
+    {
+      _id: taskType._id
+    },
+    function (error, bool) {
+      if (error) {
+        callback(false);
+      } else if (bool) {
+        callback(exists);
+      } else {
+        const new_taskType = new TaskTypeSchema({
+          _id : taskType._id,
+          Description: taskType.Description
+        });
+        new_taskType.save(function (err, saved) {
+          if (err || saved == {}) {
+            callback(false);
+          } else {
+            callback(saved);
+          }
+        });
+      }
+    }
+  );
+};
+
 exports.createTask = function (task, callback) {
   TaskSchema.exists(
     {
-      TaskDescription: task.taskDescription,
-      TaskStartDate: task.taskStartDate,
-      TaskEndDate: task.taskEndDate,
+      TaskDescription: task.TaskDescription,
+      TaskStartDate: task.TaskStartDate,
+      TaskEndDate: task.TaskEndDate,
     },
     function (error, bool) {
       if (error) {

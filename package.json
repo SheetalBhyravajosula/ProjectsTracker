@@ -22,5 +22,11 @@
     "mongodb": "^3.6.5",
     "mongoose": "^5.12.2",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "@webpack-cli/generators": "^2.0.0",
+    "html-loader": "^2.1.2",
+    "webpack": "^5.36.1",
+    "webpack-cli": "^4.6.0"
   }
 }

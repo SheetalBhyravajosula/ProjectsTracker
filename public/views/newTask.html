@@ -1,0 +1,43 @@
+<div class="formContainer">
+    <form class="simple-form" name= "TaskForm">
+      <label>Description: <textarea ng-model="task.TaskDescription" rows="4" cols="50" required></textarea></label
+      ><br />
+      <label
+      >Task Type:
+      <select ng-model="task.TaskType" required>
+        <option ng-repeat="t in taskTypes" value="{{t._id}}">
+            {{t._id}}
+        </option>
+      </select></label
+    ><br />
+      <label
+        >Project:
+        <select ng-model="task.Project" required>
+          <option ng-repeat="p in projects" value="{{p.ProjectName}}">
+            {{p.ProjectName}}
+          </option>
+        </select></label
+      ><br />
+      <label
+        >Employee:
+        <select ng-model="task.Employee" required>
+          <option ng-repeat="e in employees | filter: {Project: task.Project}" value="{{e.EmployeeId}}">
+            {{e.EmployeeId}}
+          </option>
+        </select></label
+      ><br />
+      <label>Task Start Date:<md-datepicker 
+        ng-model = "task.TaskStartDate" 
+        md-placeholder = "Enter Start date" required></md-datepicker></label
+      ><br />
+      <label>Task End Date:<md-datepicker 
+        ng-model = "task.TaskEndDate"
+        md-placeholder = "Enter End date" ng-change="checkDate()" required></md-datepicker></label
+        ><br />
+        <span class="Error">{{errMessage}}</span><br />
+        <label>Duration: <input type="number" ng-model="task.Duration" required/></label
+          ><br />
+      <input type="button" ng-disabled="saveDisabled || TaskForm.$invalid || errMessage==='Start Date should be earlier than End Date'" ng-click="save(task)" value="Submit"/>
+      </form>
+  </div>
+  

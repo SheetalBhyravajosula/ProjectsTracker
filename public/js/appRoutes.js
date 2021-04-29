@@ -10,6 +10,21 @@ angular.module("appRoutes", []).config([
         controller: "MainController",
       })
 
+      .when("/tasks/newTask", {
+        templateUrl: "views/newTask.html",
+        controller: "NewTaskController",
+      })
+
+      .when("/tasks", {
+        templateUrl: "views/task.html",
+        controller: "TaskController",
+      })
+
+      .when("/tasks/:description", {
+        templateUrl: "views/newTask.html",
+        controller: "NewTaskController",
+      })
+
       .when("/employees", {
         templateUrl: "views/employee.html",
         controller: "EmployeeController",
