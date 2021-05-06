@@ -1,8 +1,8 @@
-angular.module("TaskController", ["TaskService","EmployeeService", "ProjectService", "ngMaterial"]).controller("TaskController",["Task","Employee", "Project", "$location", "$scope",
-function(Task,Employee, Project,$location, $scope) {
+angular.module("TaskController", ["TaskService","EmployeeService", "ProjectService", "ngMaterial"]).controller("TaskController",["Task","Employee", "Project", "$location",
+function(Task,Employee, Project,$location) {
     let vm=this;
-    $scope.employee = {};
-    $scope.taskData = null;
+    vm.employee = {};
+    vm.taskData = null;
     vm.employees = null;
     vm.getTasksAll = function(){
       Task.getTasks().then(function(response){
@@ -13,15 +13,17 @@ function(Task,Employee, Project,$location, $scope) {
           let proj = Project.projects.find(pro=>pro._id===task.Project);
           task.Project = proj && proj.ProjectName;
         });
-        $scope.taskData = vm.taskData;
+        vm.taskData = vm.taskData;
       });
     }
     vm.getTasksAll();
-    $scope.Edit = function(task) {
+    vm.Edit = function(task) {
+        Task.disable = true;
+        Task.setFormType(true);
         Task.setTask(task);
         $location.path('/tasks/' + task.TaskDescription);
     }
-    $scope.Delete = function(task){
+    vm.Delete = function(task){
         Task.deleteTask(task).then(function(response){
             console.log(response);
         }).catch(function(err){
@@ -29,10 +31,16 @@ function(Task,Employee, Project,$location, $scope) {
         });
         vm.getTasksAll();
     }
-    $scope.AddNewTask = function () {
+    vm.AddNewTask = function () {
+      Task.disable = false;
       Task.setTask(null);
       $location.path("/tasks/newTask");
     };
+    vm.View= function(task){
+      Task.setTask(task);
+      Task.setFormType(false);
+      $location.path('/tasks/' + task.TaskDescription);
+    }
 },
 ]);
   

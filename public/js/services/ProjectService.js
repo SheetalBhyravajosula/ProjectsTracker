@@ -86,7 +86,9 @@ angular.module("ProjectService", []).service("Project", function ($http, $q) {
   this.setProject = function (project) {
     let tech = "";
     this.project = project;
-    this.disableName = this.project && this.project.ProjectName;
+    if (this.project && this.project.ProjectName){
+      this.disableName = true;
+    }
     if (this.project && typeof this.project.Technology == "object") {
       this.project.Technology.forEach(function (i, idx, array) {
         if (idx === array.length - 1) {

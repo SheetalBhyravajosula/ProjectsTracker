@@ -103,8 +103,8 @@ exports.deleteTask = function(req, res) {
 
 exports.modifyTask = function(req, res) {
     const updateTask = req.body.updateTask;
-    const startDate = req.query.startDate || null;
-    const endDate = req.query.endDate || null;
+    const startDate = req.query.StartDate || null;
+    const endDate = req.query.EndDate || null;
     const taskDescription = req.params.taskDescription;
     console.log(updateTask);
     taskService.modifyTask(updateTask, taskDescription, startDate, endDate,

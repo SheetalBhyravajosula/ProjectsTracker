@@ -13,16 +13,19 @@ angular.module("appRoutes", []).config([
       .when("/tasks/newTask", {
         templateUrl: "views/newTask.html",
         controller: "NewTaskController",
+        controllerAs: "NewTaskCtrl"
       })
 
       .when("/tasks", {
         templateUrl: "views/task.html",
         controller: "TaskController",
+        controllerAs: "TaskCtrl"
       })
 
       .when("/tasks/:description", {
         templateUrl: "views/newTask.html",
         controller: "NewTaskController",
+        controllerAs: "NewTaskCtrl"
       })
 
       .when("/employees", {

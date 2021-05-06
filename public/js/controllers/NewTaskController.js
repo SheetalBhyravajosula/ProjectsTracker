@@ -7,40 +7,43 @@ angular
   .controller("NewTaskController", [
     "Employee",
     "Project",
-    "Task", '$filter',
-    "$location",
-    "$scope",
-    function (Employee, Project, Task, $filter, $location, $scope) {
+    "Task","$location",
+    function (Employee, Project, Task, $location) {
       let vm = this;
+      vm.Edit = Task.Edit;
+      vm.disable = Task.disable;
       var form = document.querySelector("form");
-      $scope.task = Task.task;
-      $scope.saveDisabled = true;
-      $scope.projects = Project.projects;
-      $scope.employees = Employee.employees;
-      $scope.task.TaskStartDate = $scope.task && new Date($scope.task.TaskStartDate);
-      $scope.task.TaskEndDate = $scope.task && new Date($scope.task.TaskEndDate);
-      $scope.task.Employee = $scope.task && $scope.task.Employee.toString();
-      $scope.task.TaskType = $scope.task && $scope.task.TaskType.toString();
-      $scope.task.Duration = $scope.task && parseInt($scope.task.Duration.$numberDecimal);
-      console.log($scope.task);
+      vm.task = Task.task;
+      vm.saveDisabled = true;
+      vm.projects = Project.projects;
+      vm.employees = Employee.employees;
+      
+      if(vm && vm.task){
+        vm.task.TaskStartDate = new Date(vm.task.TaskStartDate);
+        vm.task.TaskEndDate = new Date(vm.task.TaskEndDate);
+        vm.task.Employee = vm.task.Employee.toString();
+        vm.task.TaskType = vm.task.TaskType.toString();
+        vm.task.Duration = parseInt(vm.task.Duration.$numberDecimal);
+      }
+      console.log(vm.task);
       form.addEventListener("change", function () {
-        if ($scope.saveDisabled) $scope.saveDisabled = false;
+        if (vm.saveDisabled) vm.saveDisabled = false;
       });
 
       Task.getTaskTypes().then(function(response){
-        $scope.taskTypes=response.data.data;
+        vm.taskTypes=response.data.data;
       }).catch(function(err){
-        $scope.taskTypes=err.data;
+        vm.taskTypes=err.data;
       });
-      $scope.checkDate = function(){
-        if($scope.task && $scope.task.TaskStartDate > $scope.task.TaskEndDate){
-          $scope.errMessage="Start Date should be earlier than End Date";
+      vm.checkDate = function(){
+        if(vm.task && vm.task.TaskStartDate > vm.task.TaskEndDate){
+          vm.errMessage="Start Date should be earlier than End Date";
         }
         else{
-          $scope.errMessage="";
+          vm.errMessage="";
         }
       }
-      $scope.save = function(task){
+      vm.save = function(task){
         vm.task = task;
         let proj = Project.projects.find(p => p.ProjectName === vm.task.Project );
         vm.task.Project =  proj && proj._id;
@@ -48,6 +51,7 @@ angular
         vm.task.Employee = emp && emp._id;
         if(Task.task == null || Task.task == undefined){
           Task.createTask(vm.task).then(function(response){
+            vm.disable = true;
             console.log(response);
             $location.path('/tasks')
           }).catch(function(err){
@@ -56,6 +60,7 @@ angular
         }
         else{
           Task.modifyTask(vm.task).then(function(response){
+            vm.disable = true;
             console.log(response);
             $location.path('/tasks')
           }).catch(function(err){
@@ -63,8 +68,8 @@ angular
           });
         }
       }
-      $scope.AllTasks = function(){
-        $location.path('/tasks');
+      vm.EditTask = function(){
+        vm.Edit = true;
       }
     }
   ]);

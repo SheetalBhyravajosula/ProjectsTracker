@@ -2,8 +2,16 @@ angular
   .module("TaskService", ["ngMaterial"])
   .service("Task", function ($http, $q) {
     this.task = null;
+    this.disable = false;
+    this.Edit = true;
+    this.setFormType=function(value){
+      this.Edit=value;
+    }
     this.setTask = function(task){
       this.task = task;
+      if (this.task && this.task.TaskDescription){
+        this.disable = true;
+      }
     }
     this.getTaskTypes = function () {
       var deffered = $q.defer();

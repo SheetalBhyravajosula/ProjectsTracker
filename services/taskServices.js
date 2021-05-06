@@ -120,13 +120,13 @@ exports.deleteTask = function (taskDescription,startDate,endDate, callback) {
 
 exports.modifyTask = function (updateTask,taskDescription,startDate,endDate,callback) {
   const modify_task = {
-    TaskDescription: updateTask.taskDescription,
-    TaskType: updateTask.taskType,
-    Project: updateTask.project,
-    Employee: updateTask.employee,
-    TaskStartDate: updateTask.taskStartDate,
-    TaskEndDate: updateTask.taskEndDate,
-    Duration: updateTask.duration,
+    TaskDescription: updateTask.TaskDescription,
+    TaskType: updateTask.TaskType,
+    Project: updateTask.Project,
+    Employee: updateTask.Employee,
+    TaskStartDate: updateTask.TaskStartDate,
+    TaskEndDate: updateTask.TaskEndDate,
+    Duration: updateTask.Duration,
   };
   if (startDate && endDate) {
     TaskSchema.findOneAndUpdate(
