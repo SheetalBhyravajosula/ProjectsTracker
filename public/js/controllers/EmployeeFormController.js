@@ -14,8 +14,7 @@ angular
       vm.save = function (emp) {
         vm.e = emp;
         let project = vm.projects.find(
-          (id) => id.ProjectName === emp.Project
-        );
+          (id) => id.ProjectName === emp.Project);
         vm.e.Project = project._id;
         if (Employee.employee === null) {
           Employee.createEmployee(vm.e)

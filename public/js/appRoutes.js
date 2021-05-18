@@ -9,6 +9,15 @@ angular.module("appRoutes", []).config([
         templateUrl: "views/home.html",
         controller: "MainController",
       })
+      .when("/profile", {
+        templateUrl: "views/profile.html"
+      })
+      .when("/settings", {
+        templateUrl: "views/settings.html"
+      })
+      .when("/logout", {
+        templateUrl: "views/logout.html"
+      })
 
       .when("/tasks/newTask", {
         templateUrl: "views/newTask.html",

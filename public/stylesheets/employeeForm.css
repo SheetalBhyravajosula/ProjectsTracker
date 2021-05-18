@@ -11,7 +11,7 @@ input[type=text],input[type="number"], select {
   
   /* Style the submit button with a specific background color etc */
   input[type=button] {
-    background-color: #4CAF50;
+    background-color:DodgerBlue;
     color: white;
     padding: 12px 20px;
     border: none;
