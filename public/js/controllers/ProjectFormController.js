@@ -1,6 +1,9 @@
 angular
   .module("ProjectFormController", ["ProjectService"])
-  .controller("ProjectFormController", ["Project","$location",function (Project, $location) {
+  .controller("ProjectFormController", [
+    "Project",
+    "$location",
+    function (Project, $location) {
       let vm = this;
       var form = document.querySelector("form");
       vm.saveDisabled = Project.saveDisable;
@@ -9,20 +12,26 @@ angular
         if (vm.saveDisabled) vm.saveDisabled = false;
       });
       vm.Edit = Project.Edit;
-      vm.project = Project.project;
       vm.projects = Project.projects;
-      vm.project.ProjectType = vm.project && vm.project.ProjectType.toString();
-      Project.getProjectTypes().then(function(response){
-        let newArray = response.data.data.filter((value) => Object.keys(value).length !== 0);
-        vm.projectTypes=newArray;
-      }).catch(function(err){
-        vm.projectTypes=err.data;
-      })
-      vm.EditProject = function(){
-        vm.Edit = true;
+      vm.project = Project.project;
+      if (vm.project) {
+        vm.project.ProjectType = vm.project && vm.project.ProjectType.toString();
+        Project.getProjectTypes()
+          .then(function (response) {
+            let newArray = response.data.data.filter(
+              (value) => Object.keys(value).length !== 0
+            );
+            vm.projectTypes = newArray;
+          })
+          .catch(function (err) {
+            vm.projectTypes = err.data;
+          });
       }
+      vm.EditProject = function () {
+        vm.Edit = true;
+      };
       vm.save = function (proj) {
-        let technology = proj.Technology.split(',');
+        let technology = proj.Technology.split(",");
         proj.Technology = technology;
         vm.p = proj;
         if (Project.project === null) {
@@ -36,7 +45,7 @@ angular
             });
           Project.setProject(vm.project);
           vm.saveDisabled = Project.saveDisable;
-          $location.path('/projects');
+          $location.path("/projects");
         } else {
           Project.updateProject(vm.p)
             .then(function (response) {
@@ -48,7 +57,7 @@ angular
             });
           Project.setProject(vm.project);
           vm.saveDisabled = Project.saveDisable;
-          $location.path('/projects');
+          $location.path("/projects");
         }
       };
     },

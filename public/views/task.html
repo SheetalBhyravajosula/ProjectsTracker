@@ -5,15 +5,18 @@
         <input type="button" ng-click="TaskCtrl.AddNewTask()" value="Add New Task" />
       </div>
       <br>
-    <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="250px" >
+      <br>
+    <div class = "grid">
+    <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="300px" >
     <md-grid-tile ng-repeat="t in TaskCtrl.taskData | filter:searchText">
         <md-card style="width:100%;">
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline">Description: {{t.TaskDescription}}</span>
-              <span class="md-subhead">EmpID: {{t.Employee}}</span>
+              <span class="md-subhead">EmployeeID: {{t.Employee}}</span>
               <span class="md-subhead">Project: {{t.Project}}</span>
               <span class="md-subhead">Task Type: {{t.TaskType}}</span>
+              <span class="md-subhead">StartDate: {{t.TaskStartDate}} EndDate: {{t.TaskEndDate}}</span>
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
@@ -24,4 +27,5 @@
         </md-card>
     </md-grid-tile>
   </md-grid-list>
+  </div>
 </div>

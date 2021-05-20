@@ -1,3 +1,11 @@
+.topnav{
+  margin-top: 70px;
+  position:fixed;
+  z-index: 5;
+  overflow: hidden;
+  margin-right: 18px;
+  width: 83%;
+}
 .topnav input[type="button"] {
   float: right;
   top: "33px";
@@ -25,4 +33,10 @@
 
 .topnav button:hover {
   background: #ccc;
+}
+.grid{
+  margin-top: 100px;
+  overflow-y: auto;
+  height: 500px;
+  border: 3px inset gray;
 }

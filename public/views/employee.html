@@ -5,6 +5,8 @@
         <input type="button" ng-click="EmployeeCtrl.AddNewEmployee()" value="Add New Employee" />
       </div>
       <br>
+      <br>
+    <div class = "grid">
     <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-lg="4" md-row-height="250px" >
     <md-grid-tile ng-repeat="e in EmployeeCtrl.empData | filter:searchText">
         <md-card style="width:100%;">
@@ -23,4 +25,5 @@
         </md-card>
     </md-grid-tile>
   </md-grid-list>
+  </div>
 </div>

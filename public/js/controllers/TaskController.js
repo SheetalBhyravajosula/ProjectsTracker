@@ -12,6 +12,8 @@ function(Task,Employee, Project,$location) {
           task.Employee = emp && emp.EmployeeId;
           let proj = Project.projects.find(pro=>pro._id===task.Project);
           task.Project = proj && proj.ProjectName;
+          task.TaskStartDate = moment(task.TaskStartDate).format('DD-MM-YYYY');
+          task.TaskEndDate = moment(task.TaskEndDate).format('DD-MM-YYYY')
         });
         vm.taskData = vm.taskData;
       });

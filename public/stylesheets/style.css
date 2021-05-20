@@ -1,11 +1,17 @@
 body {
-  padding: 15px;
+  padding-top: 15px;
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
 a {
   color: #01070c;
   text-decoration: none;
+}
+.nav{
+  position: fixed;
+  background-color: black;
+  z-index: 9;
+  padding-left: 0%;
+  width: 83%;
 }
 
 .nav-tabs {
@@ -13,7 +19,6 @@ a {
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
   font-weight: bold;
   color:DodgerBlue;
-  background-color: black;
 }
 .nav-tabs>li>a {
   color:DodgerBlue;
@@ -29,6 +34,7 @@ a {
   overflow-x: hidden;
   transition: 0.3s;
   padding-top: 60px;
+  z-index: 10;
 }
 
 .sidenav a {
