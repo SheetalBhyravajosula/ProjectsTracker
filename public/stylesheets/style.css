@@ -11,7 +11,7 @@ a {
   background-color: black;
   z-index: 9;
   padding-left: 0%;
-  width: 83%;
+  width: 85%;
 }
 
 .nav-tabs {
@@ -60,5 +60,14 @@ a {
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav a {font-size: 14px;}
+}
+
+.tabbable .nav-tabs {
+  overflow-x: auto;
+  overflow-y:hidden;
+  flex-wrap: nowrap;
+}
+.tabbable .nav-tabs .nav-link {
+ white-space: nowrap;
 }

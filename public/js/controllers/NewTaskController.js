@@ -19,11 +19,11 @@ angular
       vm.employees = Employee.employees;
       
       if(vm && vm.task){
-        vm.task.TaskStartDate = new Date(vm.task.TaskStartDate);
-        vm.task.TaskEndDate = new Date(vm.task.TaskEndDate);
-        vm.task.Employee = vm.task.Employee.toString();
-        vm.task.TaskType = vm.task.TaskType.toString();
-        vm.task.Duration = parseInt(vm.task.Duration.$numberDecimal);
+        vm.task.TaskStartDate = vm.task.TaskStartDate && new Date(vm.task.TaskStartDate);
+        vm.task.TaskEndDate = vm.task.TaskEndDate && new Date(vm.task.TaskEndDate);
+        vm.task.Employee = vm.task.Employee && vm.task.Employee.toString();
+        vm.task.TaskType = vm.task.TaskType && vm.task.TaskType.toString();
+        vm.task.Duration = vm.task.Duration && parseInt(vm.task.Duration.$numberDecimal);
       }
       console.log(vm.task);
       form.addEventListener("change", function () {

@@ -1,12 +1,13 @@
 input[type=text],input[type="number"], select {
     width: 100%; /* Full width */
     padding: 12px; /* Some padding */ 
-    border: 1px solid #ccc; /* Gray border */
+    border: 1px solid black; /* Gray border */
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
     margin-top: 20px; /* Add a top margin */
     margin-bottom: 16px; /* Bottom margin */
-    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+    background-color: rgb(250 250 250);
   }
   
   /* Style the submit button with a specific background color etc */
@@ -34,8 +35,8 @@ input[type=text],input[type="number"], select {
   input[type=button]:disabled {
     background-color: #FF85A1;
   }
-  input[type=number]:disabled {
-    background-color: #f2f2f2;
+  input[type=text]:disabled,input[type=number]:disabled {
+    background-color:  #ccc;
   }
   .Error{
     color :red;

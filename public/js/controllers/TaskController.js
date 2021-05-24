@@ -2,7 +2,8 @@ angular.module("TaskController", ["TaskService","EmployeeService", "ProjectServi
 function(Task,Employee, Project,$location) {
     let vm=this;
     vm.employee = {};
-    vm.taskData = null;
+    vm.tasks = null;
+    vm.taskData =null;
     vm.employees = null;
     vm.getTasksAll = function(){
       Task.getTasks().then(function(response){
@@ -15,10 +16,13 @@ function(Task,Employee, Project,$location) {
           task.TaskStartDate = moment(task.TaskStartDate).format('DD-MM-YYYY');
           task.TaskEndDate = moment(task.TaskEndDate).format('DD-MM-YYYY')
         });
-        vm.taskData = vm.taskData;
+        vm.tasks = vm.taskData;
       });
     }
     vm.getTasksAll();
+    vm.sortDates = function(t) {
+      return t['TaskStartDate'].split('-').reverse().join('-');
+    };
     vm.Edit = function(task) {
         Task.disable = true;
         Task.setFormType(true);

@@ -1,12 +1,12 @@
 <div ng-cloak="">
-    <div class = "topnav">
+    <div class = "topnav" flex="auto">
         <input type="text" placeholder="Search.." name="search" ng-model='searchText'>
         <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
         <input type="button" ng-click="ProjectCtrl.AddNewProject()" value="Add New Project" />
     </div>
       <br>
       <br>
-    <div class = "grid">
+    <div class = "grid" flex="auto">
       <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="250px" >
         <md-grid-tile ng-repeat="p in ProjectCtrl.projData | filter:searchText">
             <md-card style="width:100%;">

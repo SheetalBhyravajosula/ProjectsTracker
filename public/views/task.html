@@ -8,7 +8,7 @@
       <br>
     <div class = "grid">
     <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="300px" >
-    <md-grid-tile ng-repeat="t in TaskCtrl.taskData | filter:searchText">
+    <md-grid-tile ng-repeat="t in TaskCtrl.tasks | orderBy: sortDates:true | filter:searchText">
         <md-card style="width:100%;">
           <md-card-title>
             <md-card-title-text>
