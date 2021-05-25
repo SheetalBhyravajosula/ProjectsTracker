@@ -1,19 +1,21 @@
 angular
   .module("EmployeeController", [
     "EmployeeService",
-    "ProjectService",
+    "ProjectService","LoginService",
     "ngMaterial"
   ])
   .controller("EmployeeController", [
     "Employee",
     "Project",
-    "$location",
+    "$location","Login",
     "$scope",
-    function (Employee, Project, $location, $scope) {
+    function (Employee, Project, $location, Login ,$scope) {
       var vm = this;
       vm.employee = {};
       vm.empData = null;
       vm.employees = null;
+      $scope.loginSuccess = Login.loginSuccess;
+      $scope.errMessage="";
       $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
       };
@@ -24,6 +26,18 @@ angular
       $scope.closeNav = function () {
         document.getElementById("mySidenav").style.width = "0";
       };
+      $scope.login = function(userName,password){
+        Login.login(userName,password);
+        $scope.loginSuccess = Login.loginSuccess;
+        if(!$scope.loginSuccess){
+          $scope.errMessage = "Wrong UserName/Password Login Failed!"
+          this.userName="";
+          this.password="";
+        }
+        else{
+          $scope.errMessage="";
+        }
+      }
       vm.getEmployeesAll = function () {
         Employee.getEmployees()
           .then(function ({ data }) {
