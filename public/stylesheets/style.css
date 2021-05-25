@@ -6,7 +6,7 @@ a {
   color: #01070c;
   text-decoration: none;
 }
-.nav{
+.tabbable .nav{
   position: fixed;
   background-color: black;
   z-index: 9;
@@ -14,13 +14,13 @@ a {
   width: 85%;
 }
 
-.nav-tabs {
+.tabbable .nav-tabs {
   margin-bottom: 0;
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
   font-weight: bold;
   color:DodgerBlue;
 }
-.nav-tabs>li>a {
+.tabbable .nav-tabs>li>a {
   color:DodgerBlue;
 }
 .sidenav {

@@ -14,7 +14,7 @@ angular
       vm.disable = Task.disable;
       var form = document.querySelector("form");
       vm.task = Task.task;
-      vm.saveDisabled = true;
+      vm.saveDisabled = false;
       vm.projects = Project.projects;
       vm.employees = Employee.employees;
       

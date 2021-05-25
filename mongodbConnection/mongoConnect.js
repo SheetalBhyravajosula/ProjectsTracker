@@ -5,7 +5,7 @@ mongoose.connect(mongoDBURI, { useFindAndModify: false, useNewUrlParser: true, u
 exports.connect = function(callback) {
     const db = mongoose.connection;
     db.on('connected', function() {
-        console.log('Mongoose default connection open to ' + mongoDBURI);
+        console.log('Mongoose default connection open to mongodb srv' );
     });
     db.on('error', console.error.bind(console, 'MongoDB connection error:'));
     return callback(db);

@@ -1,4 +1,4 @@
 {
-    "mongoDbURI":"mongodb://127.0.0.1:27017/WSR",
+    "mongoDbURI":"mongodb+srv://sheetal:Veena@1970@cluster0.uyqvj.mongodb.net/WSR?retryWrites=true&w=majority",
     "JWT_SECRET":"thisisourfirstpi"
 }
