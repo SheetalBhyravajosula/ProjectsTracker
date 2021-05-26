@@ -44,6 +44,7 @@
     <script src="js/services/EmployeeService.js"></script>
     <script src="js/controllers/ProjectFormController.js"></script>
     <script src="js/services/loginService.js"></script>
+    <script src="js/controllers/LogoutController.js"></script>
     <script src="js/appRoutes.js"></script>
     <script src="js/app.js"></script>
 </head>
@@ -76,7 +77,7 @@
             <a href="/home">Home</a>
             <a href="/profile">Profile</a>
             <a href="/settings">Settings</a>
-            <a href="/logout">Logout</a>
+            <a href="javascript:void(0)" ng-click="logout()">Logout</a>
         </div>
         
         <!-- ANGULAR DYNAMIC CONTENT -->

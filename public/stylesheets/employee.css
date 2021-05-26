@@ -39,7 +39,8 @@
   margin-top: 100px;
   overflow-y: auto;
   height: 75vh;
-  border: 3px inset gray;
+  border: 2px inset rgb(245, 243, 243);
+  width:105%;
 }
 
 @media screen and (max-width: 550px) {
@@ -52,8 +53,11 @@
     width: 50% !important;
   }
   .topnav input[type="button"] {
-    width : 32%;
+    width : 30%;
     white-space: normal;
+  }
+  .grid{
+    width: 100%;
   }
 }
 
@@ -75,5 +79,14 @@
   .topnav input[type="button"] {
     width : 30%;
     white-space: normal;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .topnav{
+    width: 92%;
+  }
+  .grid{
+    width: 100%;
   }
 }

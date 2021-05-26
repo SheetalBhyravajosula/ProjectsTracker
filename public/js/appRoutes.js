@@ -15,9 +15,6 @@ angular.module("appRoutes", []).config([
       .when("/settings", {
         templateUrl: "views/settings.html"
       })
-      .when("/logout", {
-        templateUrl: "views/logout.html"
-      })
 
       .when("/tasks/newTask", {
         templateUrl: "views/newTask.html",

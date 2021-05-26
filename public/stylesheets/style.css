@@ -1,5 +1,4 @@
 body {
-  padding-top: 15px;
   font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 a {
@@ -128,5 +127,11 @@ a {
     left: 0;
     right: 0;
     margin: auto;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .tabbable .nav{
+    width: 92%;
   }
 }

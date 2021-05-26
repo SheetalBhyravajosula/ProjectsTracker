@@ -38,6 +38,13 @@ angular
           $scope.errMessage="";
         }
       }
+      $scope.logout = function(){
+        $scope.closeNav();
+        Login.setLoginSuccess(false);
+        $scope.loginSuccess = Login.loginSuccess;
+        this.userName="";
+        this.password="";
+      }
       vm.getEmployeesAll = function () {
         Employee.getEmployees()
           .then(function ({ data }) {
