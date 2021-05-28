@@ -3,7 +3,6 @@ angular
   .service("Employee", function ($http, $q) {
     this.employee = null;
     this.employees = null;
-    this.saveDisable = false;
     this.disableID = false;
     this.getEmployees = function () {
       var deffered = $q.defer();
@@ -20,7 +19,6 @@ angular
 
     this.setEmployee = function (employee) {
       this.employee = employee;
-      this.saveDisable = false;
       this.disableID = this.employee && this.employee.EmployeeId;
     };
 

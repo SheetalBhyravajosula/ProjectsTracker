@@ -12,9 +12,7 @@ angular
       let vm = this;
       vm.Edit = Task.Edit;
       vm.disable = Task.disable;
-      var form = document.querySelector("form");
       vm.task = Task.task;
-      vm.saveDisabled = false;
       vm.projects = Project.projects;
       vm.employees = Employee.employees;
       
@@ -25,11 +23,6 @@ angular
         vm.task.TaskType = vm.task.TaskType && vm.task.TaskType.toString();
         vm.task.Duration = vm.task.Duration && parseInt(vm.task.Duration.$numberDecimal);
       }
-      console.log(vm.task);
-      form.addEventListener("change", function () {
-        if (vm.saveDisabled) vm.saveDisabled = false;
-      });
-
       Task.getTaskTypes().then(function(response){
         vm.taskTypes=response.data.data;
       }).catch(function(err){

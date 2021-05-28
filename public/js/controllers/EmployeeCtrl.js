@@ -1,21 +1,23 @@
 angular
   .module("EmployeeController", [
     "EmployeeService",
-    "ProjectService","LoginService",
-    "ngMaterial"
+    "ProjectService",
+    "LoginService",
+    "ngMaterial",
   ])
   .controller("EmployeeController", [
     "Employee",
-    "Project",
-    "$location","Login",
+    "$location",
+    "Login",
     "$scope",
-    function (Employee, Project, $location, Login ,$scope) {
+    function (Employee, $location, Login, $scope) {
       var vm = this;
       vm.employee = {};
       vm.empData = null;
       vm.employees = null;
+      vm.employeeRights = new Array();
       $scope.loginSuccess = Login.loginSuccess;
-      $scope.errMessage="";
+      $scope.errMessage = "";
       $scope.isActive = function (viewLocation) {
         return viewLocation === $location.path();
       };
@@ -26,42 +28,28 @@ angular
       $scope.closeNav = function () {
         document.getElementById("mySidenav").style.width = "0";
       };
-      $scope.login = function(userName,password){
-        Login.login(userName,password);
+      $scope.login = function (userName, password) {
+        Login.login(userName, password);
         $scope.loginSuccess = Login.loginSuccess;
-        if(!$scope.loginSuccess){
-          $scope.errMessage = "Wrong UserName/Password Login Failed!"
-          this.userName="";
-          this.password="";
+        if (!$scope.loginSuccess) {
+          $scope.errMessage = "Wrong UserName/Password Login Failed!";
+          this.userName = "";
+          this.password = "";
+        } else {
+          $scope.errMessage = "";
         }
-        else{
-          $scope.errMessage="";
-        }
-      }
-      $scope.logout = function(){
+      };
+      $scope.logout = function () {
         $scope.closeNav();
         Login.setLoginSuccess(false);
         $scope.loginSuccess = Login.loginSuccess;
-        this.userName="";
-        this.password="";
-      }
+        this.userName = "";
+        this.password = "";
+      };
       vm.getEmployeesAll = function () {
         Employee.getEmployees()
           .then(function ({ data }) {
             vm.employees = data.data;
-            vm.employees.forEach((emp) => {
-              Project.getProjects()
-                .then(function ({ data }) {
-                  vm.emp = emp;
-                  let projects = data.data;
-                  Project.setProjects(projects);
-                  let project = projects.find((id) => id._id === emp.Project);
-                  vm.emp.Project = project.ProjectName;
-                })
-                .catch(function (err) {
-                  vm.employees.Project = err;
-                });
-            });
             vm.empData = vm.employees;
             Employee.setEmployees(vm.employees);
           })
@@ -70,6 +58,7 @@ angular
           });
       };
       vm.getEmployeesAll();
+      vm.employeeRights = Login.employeeRights;
       vm.Edit = function (employee) {
         Employee.setEmployee(employee);
         $location.path("/employees/" + employee.EmployeeId);

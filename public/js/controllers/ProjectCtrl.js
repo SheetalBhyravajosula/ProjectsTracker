@@ -1,9 +1,9 @@
 angular
-  .module("ProjectController", ["ProjectService"])
+  .module("ProjectController", ["ProjectService","LoginService"])
   .controller("ProjectController", [
-    "Project",
+    "Project","Login",
     "$location",
-    function (Project, $location) {
+    function (Project,Login, $location) {
       let vm = this;
       vm.projData = Project.projects;
       vm.allProjects = function () {
@@ -17,6 +17,7 @@ angular
           });
       };
       vm.allProjects();
+     // vm.projectRights = Login.projectRights;
       vm.AddNewProject = function () {
         Project.setProject(null);
         $location.path("/projects/new");

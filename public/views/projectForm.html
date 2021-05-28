@@ -12,8 +12,8 @@
     <label
       >Project Type:
       <select ng-model="ProjectFormCtrl.project.ProjectType" required>
-        <option ng-repeat="p in ProjectFormCtrl.projectTypes" value="{{p._id}}">
-          {{p._id}} {{p.Description}}
+        <option ng-repeat="p in ProjectFormCtrl.projectTypes" value="{{p.Description}}">
+          {{p.Description}}
         </option>
       </select></label
     ><br />

@@ -2,7 +2,6 @@ angular.module("ProjectService", []).service("Project", function ($http, $q) {
   this.projects = null;
   this.project = null;
   this.disableName = false;
-  this.saveDisable = false;
   this.Edit = true;
   this.getProjects = function () {
     var deffered = $q.defer();
@@ -16,6 +15,9 @@ angular.module("ProjectService", []).service("Project", function ($http, $q) {
     );
     return deffered.promise;
   };
+  this.getProjects().then(({data})=>{
+    this.setProjects(data.data);
+  })
   this.getProjectById = function (id) {
     var deffered = $q.defer();
     $http.get("/projects/getProjectById/" + id).then(

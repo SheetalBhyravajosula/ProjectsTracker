@@ -4,12 +4,23 @@ const exists = "Exists";
 const doesNotExist = "DoesNotExist";
 
 exports.getProjects = function (callback) {
-  projectSchema.find({}, function (err, result) {
+  projectSchema.find({}).lean().exec(async function (err, projects) {
     if (err) {
       callback(false);
     } else {
-      callback(result);
-    }
+      await new Promise((resolve)=>{
+        projects.forEach(async (proj)=>{
+          await projectTypeSchema.findOne({_id : proj.ProjectType}, function(error,pType){
+            if(error){
+              callback(false);
+            }
+            proj.ProjectType = pType.Description;
+          })
+          resolve();
+        })
+      })
+      callback(projects);
+    };
   });
 };
 
@@ -39,12 +50,18 @@ exports.createProject = function (project, callback) {
     {
       ProjectName: project.projectName,
     },
-    function (error, bool) {
+    async function (error, bool) {
       if (error) {
         callback(false);
       } else if (bool) {
         callback(exists);
       } else {
+        await projectTypeSchema.findOne({Description : project.ProjectType},function(e,projType){
+          if(e){
+            callback(false);
+          }
+          project.ProjectType = projType._id;
+        });
         const new_project = new projectSchema({
           ProjectName: project.ProjectName,
           Category: project.Category,
@@ -108,7 +125,13 @@ exports.deleteProject = function (projectName, callback) {
   });
 };
 
-exports.modifyProject = function (updateProject, projectName, callback) {
+exports.modifyProject = async function (updateProject, projectName, callback) {
+  await projectTypeSchema.findOne({Description : updateProject.ProjectType},function(e,projType){
+    if(e){
+      callback(false);
+    }
+    updateProject.ProjectType = projType._id;
+  });
   const modify_project = {
     ProjectName: updateProject.ProjectName,
     Category: updateProject.Category,
