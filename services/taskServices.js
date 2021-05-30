@@ -1,16 +1,54 @@
 const TaskSchema = require("../schemas/tasksSchema");
 const TaskTypeSchema = require("../schemas/taskTypeSchema");
+const EmployeeSchema = require("../schemas/employeeSchema");
+const ProjectSchema = require("../schemas/projectSchema");
+const employeeService = require("./employeeServices");
+const projectService = require("./projectServices");
+const async = require("async");
 const exists = "Exists";
 const doesNotExist = "DoesNotExist";
 
 exports.getTasks = function (callback) {
-  TaskSchema.find({}, function (err, result) {
-    if (err) {
-      callback(false);
-    } else {
-      callback(result);
-    }
-  });
+  TaskSchema.find({})
+    .lean()
+    .exec(async function (err, tasks) {
+      if (err) {
+        callback(false);
+      } else {
+        await Promise.all(
+          tasks.map(async (task) => {
+            await TaskTypeSchema.findOne(
+              { _id: task.TaskType },
+              function (e, taskType) {
+                if (e) {
+                  callback(false);
+                }
+                task.TaskType = taskType && taskType.Description;
+              }
+            );
+            await ProjectSchema.findOne(
+              { _id: task.Project },
+              function (er, proj) {
+                if (er) {
+                  callback(false);
+                }
+                task.Project = proj && proj.ProjectName;
+              }
+            );
+            await EmployeeSchema.findOne(
+              { _id: task.Employee },
+              function (error, emp) {
+                if (error) {
+                  callback(false);
+                }
+                task.Employee = emp && emp.EmployeeId;
+              }
+            );
+          })
+        );
+        callback(tasks);
+      }
+    });
 };
 
 exports.getTaskTypes = function (callback) {
@@ -26,7 +64,7 @@ exports.getTaskTypes = function (callback) {
 exports.createTaskType = function (taskType, callback) {
   TaskTypeSchema.exists(
     {
-      _id: taskType._id
+      _id: taskType._id,
     },
     function (error, bool) {
       if (error) {
@@ -35,8 +73,8 @@ exports.createTaskType = function (taskType, callback) {
         callback(exists);
       } else {
         const new_taskType = new TaskTypeSchema({
-          _id : taskType._id,
-          Description: taskType.Description
+          _id: taskType._id,
+          Description: taskType.Description,
         });
         new_taskType.save(function (err, saved) {
           if (err || saved == {}) {
@@ -57,34 +95,53 @@ exports.createTask = function (task, callback) {
       TaskStartDate: task.TaskStartDate,
       TaskEndDate: task.TaskEndDate,
     },
-    function (error, bool) {
+    async function (error, bool) {
       if (error) {
         callback(false);
       } else if (bool) {
         callback(exists);
       } else {
-        const new_task = new TaskSchema({
-          TaskDescription: task.TaskDescription,
-          TaskType: task.TaskType,
-          Project: task.Project,
-          Employee: task.Employee,
-          TaskStartDate: task.TaskStartDate,
-          TaskEndDate: task.TaskEndDate,
-          Duration: task.Duration,
-        });
-        new_task.save(function (err, saved) {
-          if (err) {
-            callback(false);
-          } else {
-            callback(saved);
+        async.parallel(
+          {
+            TaskType: function (cb) {
+              TaskTypeSchema.findOne({ Description: task.TaskType }).exec(cb);
+            },
+            Project: function (cb) {
+              ProjectSchema.findOne({ ProjectName: task.Project }).exec(cb);
+            },
+            Employee: function (cb) {
+              EmployeeSchema.findOne({ EmployeeId: task.Employee }).exec(cb);
+            },
+          },
+          function (err, result) {
+            if (err) callback(false);
+            task.TaskType = result && result.TaskType && result.TaskType._id;
+            task.Project = result && result.Project && result.Project._id;
+            task.Employee = result && result.Employee && result.Employee._id;
+            const new_task = new TaskSchema({
+              TaskDescription: task.TaskDescription,
+              TaskType: task.TaskType,
+              Project: task.Project,
+              Employee: task.Employee,
+              TaskStartDate: task.TaskStartDate,
+              TaskEndDate: task.TaskEndDate,
+              Duration: task.Duration,
+            });
+            new_task.save(function (err1, saved) {
+              if (err1) {
+                callback(false);
+              } else {
+                callback(saved);
+              }
+            });
           }
-        });
+        );
       }
     }
   );
 };
 
-exports.deleteTask = function (taskDescription,startDate,endDate, callback) {
+exports.deleteTask = function (taskDescription, startDate, endDate, callback) {
   if (startDate && endDate) {
     TaskSchema.findOneAndDelete(
       {
@@ -95,9 +152,9 @@ exports.deleteTask = function (taskDescription,startDate,endDate, callback) {
       function (err, result) {
         if (err) {
           callback(false);
-        } else if(result==null){
-            callback(doesNotExist)
-        }else {
+        } else if (result == null) {
+          callback(doesNotExist);
+        } else {
           callback(result);
         }
       }
@@ -108,8 +165,8 @@ exports.deleteTask = function (taskDescription,startDate,endDate, callback) {
       function (err, result) {
         if (err) {
           callback(false);
-        } else if(result==null){
-            callback(doesNotExist)
+        } else if (result == null) {
+          callback(doesNotExist);
         } else {
           callback(result);
         }
@@ -118,47 +175,74 @@ exports.deleteTask = function (taskDescription,startDate,endDate, callback) {
   }
 };
 
-exports.modifyTask = function (updateTask,taskDescription,startDate,endDate,callback) {
-  const modify_task = {
-    TaskDescription: updateTask.TaskDescription,
-    TaskType: updateTask.TaskType,
-    Project: updateTask.Project,
-    Employee: updateTask.Employee,
-    TaskStartDate: updateTask.TaskStartDate,
-    TaskEndDate: updateTask.TaskEndDate,
-    Duration: updateTask.Duration,
-  };
-  if (startDate && endDate) {
-    TaskSchema.findOneAndUpdate(
-      {
-        TaskDescription: taskDescription,
-        TaskEndDate: endDate,
-        TaskStartDate: startDate,
+exports.modifyTask = async function (
+  updateTask,
+  taskDescription,
+  startDate,
+  endDate,
+  callback
+) {
+  async.parallel(
+    {
+      TaskType: function (cb) {
+        TaskTypeSchema.findOne({ Description: updateTask.TaskType }).exec(cb);
       },
-      modify_task,
-      function (err, result) {
-        if (err) {
-          callback(false);
-        } else if(result==null){
-            callback(doesNotExist)
-        }else {
-          callback(result);
-        }
+      Project: function (cb) {
+        ProjectSchema.findOne({ ProjectName: updateTask.Project }).exec(cb);
+      },
+      Employee: function (cb) {
+        EmployeeSchema.findOne({ EmployeeId: updateTask.Employee }).exec(cb);
+      },
+    },
+    function (err, result) {
+      if (err) {
+        callback(false);
       }
-    );
-  } else {
-    TaskSchema.findOneAndUpdate(
-      { TaskDescription: taskDescription },
-      modify_task,
-      function (err, result) {
-        if (err) {
-          callback(false);
-        } else if(result==null){
-            callback(doesNotExist)
-        }else {
-          callback(result);
-        }
+      updateTask.TaskType = result && result.TaskType && result.TaskType._id;
+      updateTask.Project = result && result.Project && result.Project._id;
+      updateTask.Employee = result && result.Employee && result.Employee._id;
+      const modify_task = {
+        TaskDescription: updateTask.TaskDescription,
+        TaskType: updateTask.TaskType,
+        Project: updateTask.Project,
+        Employee: updateTask.Employee,
+        TaskStartDate: updateTask.TaskStartDate,
+        TaskEndDate: updateTask.TaskEndDate,
+        Duration: updateTask.Duration,
+      };
+      if (startDate && endDate) {
+        TaskSchema.findOneAndUpdate(
+          {
+            TaskDescription: taskDescription,
+            TaskEndDate: endDate,
+            TaskStartDate: startDate,
+          },
+          modify_task,
+          function (err1, result) {
+            if (err1) {
+              callback(false);
+            } else if (result == null) {
+              callback(doesNotExist);
+            } else {
+              callback(result);
+            }
+          }
+        );
+      } else {
+        TaskSchema.findOneAndUpdate(
+          { TaskDescription: taskDescription },
+          modify_task,
+          function (err1, result) {
+            if (err1) {
+              callback(false);
+            } else if (result == null) {
+              callback(doesNotExist);
+            } else {
+              callback(result);
+            }
+          }
+        );
       }
-    );
-  }
+    }
+  );
 };

@@ -10,14 +10,13 @@ exports.getEmployees = function (callback) {
     } else {
       await new Promise((resolve)=>{
         employees.forEach(async (emp) => {
-          await projectSchema.find(
+          await projectSchema.findOne(
             { _id: emp.Project },
             function (error, project) {
               if (error) {
-                console.log("error in getEmployees" + error);
                 callback(false);
               } else {
-                emp.Project = project[0].ProjectName;
+                emp.Project = project && project.ProjectName;
               }
             }
           );
@@ -45,7 +44,7 @@ exports.createEmployee = function (employee, callback) {
           if(err){
             callback(false);
           }
-          employee.Project = proj._id;
+          employee.Project = proj && proj._id;
         })
         const new_employee = new employeeSchema({
           EmployeeId: employee.EmployeeId,
@@ -86,7 +85,7 @@ exports.modifyEmployee = async function (updateEmployee, employeeId, callback) {
     if(err){
       callback(false);
     }
-    updateEmployee.Project = proj._id;
+    updateEmployee.Project = proj && proj._id;
     console.log(updateEmployee.Project);
   })
   const modify_employee = {

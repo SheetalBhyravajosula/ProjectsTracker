@@ -14,7 +14,7 @@ exports.getProjects = function (callback) {
             if(error){
               callback(false);
             }
-            proj.ProjectType = pType.Description;
+            proj.ProjectType = pType && pType.Description;
           })
           resolve();
         })
@@ -60,7 +60,7 @@ exports.createProject = function (project, callback) {
           if(e){
             callback(false);
           }
-          project.ProjectType = projType._id;
+          project.ProjectType = projType && projType._id;
         });
         const new_project = new projectSchema({
           ProjectName: project.ProjectName,
@@ -130,7 +130,7 @@ exports.modifyProject = async function (updateProject, projectName, callback) {
     if(e){
       callback(false);
     }
-    updateProject.ProjectType = projType._id;
+    updateProject.ProjectType = projType && projType._id;
   });
   const modify_project = {
     ProjectName: updateProject.ProjectName,

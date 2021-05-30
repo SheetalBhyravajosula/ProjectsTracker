@@ -9,12 +9,8 @@ function(Task,Employee, Project,$location) {
       Task.getTasks().then(function(response){
         vm.taskData=response.data.data;
         vm.taskData.forEach(task => {
-          let emp = Employee.employees.find(emp=>emp._id===task.Employee);
-          task.Employee = emp && emp.EmployeeId;
-          let proj = Project.projects.find(pro=>pro._id===task.Project);
-          task.Project = proj && proj.ProjectName;
-          task.TaskStartDate = moment(task.TaskStartDate).format('DD-MM-YYYY');
-          task.TaskEndDate = moment(task.TaskEndDate).format('DD-MM-YYYY')
+          task.startDate = moment(task.TaskStartDate).format('DD-MM-YYYY');
+          task.endDate = moment(task.TaskEndDate).format('DD-MM-YYYY')
         });
         vm.tasks = vm.taskData;
       });

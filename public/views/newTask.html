@@ -5,8 +5,8 @@
       <label
       >Task Type:
       <select ng-model="NewTaskCtrl.task.TaskType" required>
-        <option ng-repeat="t in NewTaskCtrl.taskTypes" value="{{t._id}}">
-            {{t._id}}
+        <option ng-repeat="t in NewTaskCtrl.taskTypes" value="{{t.Description}}">
+            {{t.Description}}
         </option>
       </select></label
     ><br />
@@ -28,11 +28,11 @@
       ><br />
       <label>Task Start Date:<md-datepicker 
         ng-model = "NewTaskCtrl.task.TaskStartDate" 
-        md-placeholder = "Enter Start date" ng-disabled='NewTaskCtrl.disable' required></md-datepicker></label
+        md-placeholder = "Enter Start date" required></md-datepicker></label
       ><br />
       <label>Task End Date:<md-datepicker 
         ng-model = "NewTaskCtrl.task.TaskEndDate"
-        md-placeholder = "Enter End date" ng-change="NewTaskCtrl.checkDate()" ng-disabled='NewTaskCtrl.disable' required></md-datepicker></label
+        md-placeholder = "Enter End date" ng-change="NewTaskCtrl.checkDate()" required></md-datepicker></label
         ><br />
         <span class="Error">{{NewTaskCtrl.errMessage}}</span><br />
         <label>Duration: <input type="number" ng-model="NewTaskCtrl.task.Duration" required/></label

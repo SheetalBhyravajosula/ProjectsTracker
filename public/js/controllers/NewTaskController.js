@@ -38,15 +38,11 @@ angular
       }
       vm.save = function(task){
         vm.task = task;
-        let proj = Project.projects.find(p => p.ProjectName === vm.task.Project );
-        vm.task.Project =  proj && proj._id;
-        let emp = Employee.employees.find(e => e.EmployeeId === parseInt(vm.task.Employee));
-        vm.task.Employee = emp && emp._id;
         if(Task.task == null || Task.task == undefined){
           Task.createTask(vm.task).then(function(response){
             vm.disable = true;
             console.log(response);
-            $location.path('/tasks')
+            $location.path('/tasks');
           }).catch(function(err){
             console.log(err);
           });
