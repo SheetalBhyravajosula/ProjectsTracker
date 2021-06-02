@@ -17,7 +17,6 @@ exports.getEmployees = function (req, res) {
 };
 exports.createEmployee = function (req, res) {
   const employee = req.body.employee;
-  console.log(employee);
   employeeService.createEmployee(employee, function (result) {
     if (result == false) {
       res.status(500).json({
@@ -63,7 +62,6 @@ exports.deleteEmployee = function (req, res) {
 exports.modifyEmployee = function (req, res) {
   const updateEmployee = req.body.updateEmployee;
   const employeeId = req.params.employeeId;
-  console.log(updateEmployee);
   employeeService.modifyEmployee(updateEmployee, employeeId, function (result) {
     if (result == false) {
       res.status(500).json({

@@ -80,31 +80,30 @@ exports.deleteEmployee = function (employeeId, callback) {
   );
 };
 
-exports.modifyEmployee = async function (updateEmployee, employeeId, callback) {
-  await projectSchema.findOne({ProjectName : updateEmployee.Project},function(err,proj){
+exports.modifyEmployee = function (updateEmployee, employeeId, callback) {
+  projectSchema.findOne({ProjectName : updateEmployee.Project},function(err,proj){
     if(err){
       callback(false);
     }
     updateEmployee.Project = proj && proj._id;
-    console.log(updateEmployee.Project);
-  })
-  const modify_employee = {
-    EmployeeId: updateEmployee.EmployeeId,
-    EmployeeName: updateEmployee.EmployeeName,
-    BillRate: updateEmployee.BillRate,
-    Project: updateEmployee.Project,
-  };
-  employeeSchema.findOneAndUpdate(
-    { EmployeeId: employeeId },
-    modify_employee,
-    function (err, result) {
-      if (err) {
-        callback(false);
-      } else if (result == null) {
-        callback(doesNotExist);
-      } else {
-        callback(result);
+    const modify_employee = {
+      EmployeeId: updateEmployee.EmployeeId,
+      EmployeeName: updateEmployee.EmployeeName,
+      BillRate: updateEmployee.BillRate,
+      Project: updateEmployee.Project,
+    };
+    employeeSchema.findOneAndUpdate(
+      { EmployeeId: employeeId },
+      modify_employee,
+      function (err, result) {
+        if (err) {
+          callback(false);
+        } else if (result == null) {
+          callback(doesNotExist);
+        } else {
+          callback(result);
+        }
       }
-    }
-  );
+    );
+  })
 };

@@ -9,6 +9,7 @@
     "angular": "^1.8.2",
     "angular-animate": "^1.8.2",
     "angular-aria": "^1.8.2",
+    "angular-cookies": "^1.8.2",
     "angular-material": "http://github.com/angular/bower-material/tarball/v1.2.1",
     "angular-messages": "^1.8.2",
     "asyncawait": "^3.0.0",

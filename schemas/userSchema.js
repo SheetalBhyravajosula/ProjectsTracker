@@ -6,7 +6,7 @@ const JWT_SECRET = require('../config.json').JWT_SECRET;
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-     userid : {
+     userId : {
                 type : String,
                 required : true
               },
@@ -22,6 +22,10 @@ const userSchema = new schema({
                         }
                     }
                 },
+    role : {
+                type : String,
+                required : true
+            },
     tokens : [{
                 token : {
                     type : String,

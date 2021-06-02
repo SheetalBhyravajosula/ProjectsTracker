@@ -1,12 +1,21 @@
 angular
   .module("EmployeeService", ["ngMaterial"])
-  .service("Employee", function ($http, $q) {
+  .service("Employee", function ($http, $q, $cookies) {
     this.employee = null;
     this.employees = null;
     this.disableID = false;
+    this.headers = {
+      "Content-Type": "application/json",
+      Authorization: $cookies.get("AuthToken"),
+    };
     this.getEmployees = function () {
       var deffered = $q.defer();
-      $http.get("/employees/getEmployees").then(
+      var req = {
+        method: "GET",
+        url: "/employees/getEmployees",
+        headers: this.headers,
+      };
+      $http(req).then(
         function success(response) {
           deffered.resolve(response);
         },
@@ -22,9 +31,9 @@ angular
       this.disableID = this.employee && this.employee.EmployeeId;
     };
 
-    this.setEmployees = function(employees){
-      this.employees = employees
-    }
+    this.setEmployees = function (employees) {
+      this.employees = employees;
+    };
 
     this.updateEmployee = function (employee) {
       var deffered = $q.defer();
@@ -33,7 +42,7 @@ angular
         method: "POST",
         url: "/employees/modifyEmployee/" + employee.EmployeeId,
         data: JSON.stringify(emp),
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers,
       };
       $http(req).then(
         function success(response) {
@@ -52,7 +61,7 @@ angular
         method: "POST",
         url: "/employees/createEmployee",
         data: JSON.stringify(emp),
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers,
       };
       $http(req).then(
         function success(response) {
@@ -69,7 +78,7 @@ angular
       var req = {
         method: "GET",
         url: "/employees/deleteEmployee/" + employee.EmployeeId,
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers,
       };
       $http(req).then(
         function success(response) {
@@ -80,6 +89,5 @@ angular
         }
       );
       return deffered.promise;
-    }
+    };
   });
-  

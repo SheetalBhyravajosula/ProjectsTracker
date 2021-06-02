@@ -1,15 +1,24 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const projectController = require('../controllers/projectsController.js')
+const projectController = require("../controllers/projectsController.js");
+const auth = require("../middleware/auth.js");
 
 /* GET projects listing. */
-router.get('/getProjects', projectController.getProjects);
-router.get('/getProjectByID/:id',projectController.getProjectById)
-router.post('/createProject', projectController.createProject);
-router.get('/deleteProject/:projectName', projectController.deleteProject);
-router.post('/modifyProject/:projectName', projectController.modifyProject);
-router.get('/getProjectTypes', projectController.getProjectTypes);
-router.post('/createProjectType', projectController.createProjectType);
+router.get("/getProjects", auth, projectController.getProjects);
+router.get("/getProjectByID/:id", auth, projectController.getProjectById);
+router.post("/createProject", auth, projectController.createProject);
+router.get(
+  "/deleteProject/:projectName",
+  auth,
+  projectController.deleteProject
+);
+router.post(
+  "/modifyProject/:projectName",
+  auth,
+  projectController.modifyProject
+);
+router.get("/getProjectTypes", auth, projectController.getProjectTypes);
+router.post("/createProjectType", auth, projectController.createProjectType);
 
 module.exports = router;

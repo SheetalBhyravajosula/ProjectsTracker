@@ -1,9 +1,13 @@
 angular
   .module("TaskService", ["ngMaterial"])
-  .service("Task", function ($http, $q) {
+  .service("Task", function ($http, $q , $cookies) {
     this.task = null;
     this.disable = false;
     this.Edit = true;
+    this.headers = {
+       "Content-Type": "application/json",
+       "Authorization" : $cookies.get('AuthToken')
+      }
     this.setFormType=function(value){
       this.Edit=value;
     }
@@ -15,7 +19,12 @@ angular
     }
     this.getTaskTypes = function () {
       var deffered = $q.defer();
-      $http.get("/tasks/getTaskTypes").then(
+      var req = {
+        method: "GET",
+        url: "/tasks/getTaskTypes",
+        headers: this.headers,
+      };
+      $http(req).then(
         function success(response) {
           deffered.resolve(response);
         },
@@ -28,7 +37,12 @@ angular
 
     this.getTasks = function () {
       var deffered = $q.defer();
-      $http.get("/tasks/getTasks").then(
+      var req = {
+        method: "GET",
+        url: "/tasks/getTasks",
+        headers: this.headers,
+      };
+      $http(req).then(
         function success(response) {
           deffered.resolve(response);
         },
@@ -46,7 +60,7 @@ angular
         method: "POST",
         url: "/tasks/createTask",
         data: JSON.stringify(createTask),
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers,
       };
       $http(req).then(
         function success(response) {
@@ -64,7 +78,7 @@ angular
         method: "GET",
         url: "/tasks/deleteTask/" + task.TaskDescription,
         params: {TaskStartDate : task.TaskStartDate , TaskEndDate : task.TaskEndDate},
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers,
       };
       $http(req).then(
         function success(response) {
@@ -85,7 +99,7 @@ angular
         url: "/tasks/modifyTask/" + task.TaskDescription,
         data: JSON.stringify(modifyTask),
         params: {TaskStartDate : task.TaskStartDate , TaskEndDate : task.TaskEndDate},
-        headers: { "Content-Type": "application/json" },
+        headers: this.headers,
       };
       $http(req).then(
         function success(response) {

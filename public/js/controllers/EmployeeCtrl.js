@@ -29,15 +29,23 @@ angular
         document.getElementById("mySidenav").style.width = "0";
       };
       $scope.login = function (userName, password) {
-        Login.login(userName, password);
-        $scope.loginSuccess = Login.loginSuccess;
-        if (!$scope.loginSuccess) {
-          $scope.errMessage = "Wrong UserName/Password Login Failed!";
-          this.userName = "";
-          this.password = "";
-        } else {
-          $scope.errMessage = "";
-        }
+        Login.login(userName, password)
+          .then((response) => {
+            Login.setAuthToken(response);
+            Login.setLoginSuccess(true);
+            $scope.loginSuccess = Login.loginSuccess;
+            if (!$scope.loginSuccess) {
+              $scope.errMessage = "Wrong UserName/Password Login Failed!";
+              this.userName = "";
+              this.password = "";
+            } else {
+              $scope.errMessage = "";
+            }
+          })
+          .catch((response) => {
+            console.log(response);
+            $scope.errMessage = "Wrong UserName/Password Login Failed!";
+          });
       };
       $scope.logout = function () {
         $scope.closeNav();
