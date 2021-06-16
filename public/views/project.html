@@ -1,30 +1,63 @@
 <div ng-cloak="">
-    <div class = "topnav" flex="auto">
-        <input type="text" placeholder="Search.." name="search" ng-model='searchText'>
-        <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        <input type="button" ng-click="ProjectCtrl.AddNewProject()" value="Add New Project" />
-    </div>
-      <br>
-      <br>
-    <div class = "grid" flex="auto">
-      <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="250px" >
-        <md-grid-tile ng-repeat="p in ProjectCtrl.projData | filter:searchText">
-            <md-card style="width:100%;">
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Name: {{p.ProjectName}}</span>
-                  <span class="md-subhead">Client Name: {{p.ClientName}}</span>
-                  <span class="md-subhead">Onsite Count: {{p.OnsiteCount}}</span>
-                  <span class="md-subhead">OffshoreCount: {{p.OffshoreCount}}</span>
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="ProjectCtrl.View(p)">View</md-button>
-                <md-button ng-click="ProjectCtrl.Edit(p)">Edit</md-button>
-                <md-button ng-click="ProjectCtrl.Delete(p)">Delete</md-button>
-              </md-card-actions>
-            </md-card>
-        </md-grid-tile>
-      </md-grid-list>
-    </div>
+  <div class="topnav" flex="auto">
+    <input
+      type="text"
+      placeholder="Search.."
+      name="search"
+      ng-model="searchText"
+    />
+    <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+    <input
+      type="button"
+      ng-click="ProjectCtrl.AddNewProject()" ng-disabled="ProjectCtrl.AddDisabled"
+      value="Add New Project"
+    /><br />
+    <button ng-click="ProjectCtrl.allProjects()" style="float: right">
+      Refresh
+      <i class="glyphicon glyphicon-refresh" style="font-size: 24px"></i>
+    </button>
+  </div>
+  <br />
+  <br />
+  <div class="grid" flex="auto">
+    <div class="spinner-border text-info" ng-show="ProjectCtrl.loading"></div>
+    <br /><br />
+    <md-grid-list
+      md-cols-xs="1"
+      md-cols-sm="1"
+      md-cols-md="3"
+      md-cols-lg="3"
+      md-row-height="250px"
+    >
+      <md-grid-tile ng-repeat="p in ProjectCtrl.projData | filter:searchText">
+        <md-card style="width: 100%">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">Name: {{p.ProjectName}}</span>
+              <span class="md-subhead">Client Name: {{p.ClientName}}</span>
+              <span class="md-subhead">Onsite Count: {{p.OnsiteCount}}</span>
+              <span class="md-subhead">OffshoreCount: {{p.OffshoreCount}}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button
+              ng-click="ProjectCtrl.View(p)"
+              ng-disabled="!ProjectCtrl.projectRights[p.ProjectName].view"
+              >View</md-button
+            >
+            <md-button
+              ng-click="ProjectCtrl.Edit(p)"
+              ng-disabled="!ProjectCtrl.projectRights[p.ProjectName].edit"
+              >Edit</md-button
+            >
+            <md-button
+              ng-click="ProjectCtrl.Delete(p)"
+              ng-disabled="!ProjectCtrl.projectRights[p.ProjectName].delete"
+              >Delete</md-button
+            >
+          </md-card-actions>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
 </div>

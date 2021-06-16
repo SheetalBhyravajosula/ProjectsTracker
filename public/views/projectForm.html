@@ -48,6 +48,6 @@
     <label>Technology : </label> {{ProjectFormCtrl.project.Technology}}<br />
     <label>Onsite Count : </label> {{ProjectFormCtrl.project.OnsiteCount}}<br />
     <label>Offshore Count : </label> {{ProjectFormCtrl.project.OffshoreCount}}<br />
-    <input type="button" ng-click="ProjectFormCtrl.EditProject()" value="Edit" />
+    <input type="button" ng-click="ProjectFormCtrl.EditProject()" ng-disabled = "!ProjectFormCtrl.projectRights[ProjectFormCtrl.project.ProjectName].edit" value="Edit" />
   </form>
 </div>

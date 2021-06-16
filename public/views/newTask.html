@@ -49,6 +49,6 @@
       <label>Task Start Date : </label> {{NewTaskCtrl.task.TaskStartDate}}<br />
       <label>Task End Date : </label> {{NewTaskCtrl.task.TaskEndDate}}<br />
       <label>Duration : </label> {{NewTaskCtrl.task.Duration}}<br />
-      <input type="button" ng-click="NewTaskCtrl.EditTask()" value="Edit" />
+      <input type="button" ng-click="NewTaskCtrl.EditTask()" ng-disabled = "!NewTaskCtrl.taskRights[NewTaskCtrl.task.Employee].edit" value="Edit" />
     </form>
   </div>

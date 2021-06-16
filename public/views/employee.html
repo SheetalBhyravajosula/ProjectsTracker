@@ -1,15 +1,37 @@
 <div ng-cloak="">
-    <div class = "topnav">
-        <input type="text" placeholder="Search.." name="search" ng-model='searchText'>
-        <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        <input type="button" ng-click="EmployeeCtrl.AddNewEmployee()" value="Add New Employee" />
-      </div>
-      <br>
-      <br>
-    <div class = "grid">
-    <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-lg="4" md-row-height="250px" >
-    <md-grid-tile ng-repeat="e in EmployeeCtrl.empData | filter:searchText">
-        <md-card style="width:100%;">
+  <div class="topnav">
+    <input
+      type="text"
+      placeholder="Search.."
+      name="search"
+      ng-model="searchText"
+    />
+    <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+    <input
+      type="button"
+      ng-click="EmployeeCtrl.AddNewEmployee()" ng-disabled="EmployeeCtrl.AddDisabled"
+      value="Add New Employee"
+    />
+    <br />
+    <button ng-click="EmployeeCtrl.getEmployeesAll()" style="float: right">
+      Refresh
+      <i class="glyphicon glyphicon-refresh" style="font-size: 24px"></i>
+    </button>
+  </div>
+  <br />
+  <br />
+  <div class="grid">
+    <div class="spinner-border text-info" ng-show="EmployeeCtrl.loading"></div>
+    <br /><br />
+    <md-grid-list
+      md-cols-xs="1"
+      md-cols-sm="2"
+      md-cols-md="3"
+      md-cols-lg="4"
+      md-row-height="250px"
+    >
+      <md-grid-tile ng-repeat="e in EmployeeCtrl.empData | filter:searchText">
+        <md-card style="width: 100%">
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline">Name: {{e.EmployeeName}}</span>
@@ -19,11 +41,11 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="EmployeeCtrl.Edit(e)">Edit</md-button>
-            <md-button ng-click="EmployeeCtrl.Delete(e)">Delete</md-button>
+            <md-button ng-click="EmployeeCtrl.Edit(e)" ng-disabled = "!EmployeeCtrl.employeeRights[e.EmployeeId].edit">Edit</md-button>
+            <md-button ng-click="EmployeeCtrl.Delete(e)" ng-disabled = "!EmployeeCtrl.employeeRights[e.EmployeeId].delete">Delete</md-button>
           </md-card-actions>
         </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+      </md-grid-tile>
+    </md-grid-list>
   </div>
 </div>

@@ -8,12 +8,39 @@ exports.getUserByCredentials = function (req, res) {
         status: "Internal Server Error",
         message: `Could not retrieve users error occured`,
       });
+    } else if (result == "DoesNotExist") {
+      res.status(404).json({
+        status: "Failure",
+        message: `Could not get user ${creds.userId}:${result} not found`,
+      });
     } else {
       res.writeHead(200, {
         "Content-Type": "application/json",
-        Authorization: result,
+        Authorization: result.token,
       });
-      res.end();
+      res.end(JSON.stringify(result));
+    }
+  });
+};
+
+exports.getUserSQByUserId = function (req, res) {
+  const userId = req.params.id;
+  userService.getUserSQByUserId(userId, function (result) {
+    if (result == false) {
+      res.status(500).json({
+        status: "Internal Server Error",
+        message: `Could not retrieve user error occured`,
+      });
+    } else if (result == "DoesNotExist") {
+      res.status(404).json({
+        status: "failure",
+        message: `Could not get user ${userId}:${result} not found`,
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: result,
+      });
     }
   });
 };
@@ -62,26 +89,24 @@ exports.createUser = function (req, res) {
 //   });
 // };
 
-// exports.modifyUser = function (req, res) {
-//   const updateUser = req.body.updateUser;
-//   const userId = req.params.userId;
-//   console.log(updateUser);
-//   userService.modifyUser(updateUser, userId, function (result) {
-//     if (result == false) {
-//       res.status(500).json({
-//         status: "Internal Server Error",
-//         message: `Could not modify user ${userId} error occured`,
-//       });
-//     } else if (result == "DoesNotExist") {
-//       res.status(404).json({
-//         status: "failure",
-//         message: `Could not modify user ${userId}:${result} not found`,
-//       });
-//     } else {
-//       res.status(200).json({
-//         status: "success",
-//         data: result,
-//       });
-//     }
-//   });
-// };
+exports.modifyUserPassword = function (req, res) {
+  const updateUser = req.body.updateUser;
+  userService.modifyUserPassword(updateUser, function (result) {
+    if (result == false) {
+      res.status(500).json({
+        status: "Internal Server Error",
+        message: `Could not modify user ${updateUser.userId} error occured`,
+      });
+    } else if (result == "DoesNotExist") {
+      res.status(404).json({
+        status: "failure",
+        message: `Could not modify user ${updateUser.userId}:${result} not found`,
+      });
+    } else {
+      res.status(200).json({
+        status: "success",
+        data: result,
+      });
+    }
+  });
+};

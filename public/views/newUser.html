@@ -1,0 +1,158 @@
+<md-dialog aria-label="Sign Up" ng-switch="type">
+  <form name="userForm" ng-cloak ng-switch-when="SignUp">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Sign Up!</h2>
+        <span flex></span>
+        <md-button class="closebtn" ng-click="cancel()">Close </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <label
+          >Employee ID<input
+            type="text"
+            placeholder="Enter Employee ID"
+            ng-model="user.userId"
+            required /></label
+        ><br />
+        <label
+          >Password
+          <input
+            type="password"
+            placeholder="Enter Password"
+            ng-model="user.password"
+            required /></label
+        ><br />
+        <label
+          >Confirm Password<input
+            type="password"
+            placeholder="Confirm Password"
+            ng-model="user.rePassword"
+            ng-blur="checkPassword()"
+            required /></label
+        ><br />
+        <label
+          >Role
+          <select ng-model="user.role" required>
+            <option ng-repeat="r in roles" value="{{r}}">{{r}}</option>
+          </select></label
+        ><br />
+        <label
+          >Choose Your Security Question<select
+            ng-model="user.securityQuestion"
+            required
+          >
+            <option ng-repeat="q in questions" value="{{q}}">{{q}}</option>
+          </select>
+        </label>
+        <label
+          >Answer to the security question:<input
+            type="text"
+            placeholder="Answer"
+            ng-model="user.securityAnswer"
+            required
+        /></label><br><br>
+        <span class="Error">{{errMessage}}</span><br />
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" class="mdButton">
+      <span flex></span>
+      <md-button
+        type="button"
+        ng-click="submit(user)"
+        ng-disabled=" ErrorFound || userForm.$invalid "
+        >Submit
+      </md-button>
+      <md-button ng-click="cancel()"> Cancel </md-button>
+    </md-dialog-actions>
+  </form>
+  <form ng-cloak ng-switch-when="SignUpSuccess">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{print}}</h2>
+        <span flex></span>
+        <md-button class="closebtn" ng-click="cancel()">Close </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <span
+          >{{LoginMessage}}</span
+        >
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()"> Login </md-button>
+    </md-dialog-actions>
+  </form>
+  <form name="userForm" ng-cloak ng-switch-when="Forgot">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Change Password</h2>
+        <span flex></span>
+        <md-button class="closebtn" ng-click="cancel()">Close </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <label
+          >Employee ID<input
+            type="text"
+            placeholder="Enter Employee ID"
+            ng-model="user.userId"
+            ng-blur="populateSecurityQ(user.userId)"
+            required /></label
+        ><br />
+        <label
+          >New Password
+          <input
+            type="password"
+            placeholder="Enter Password"
+            ng-model="user.password"
+            required /></label
+        ><br />
+        <label
+          >Confirm Password<input
+            type="password"
+            placeholder="Confirm Password"
+            ng-model="user.rePassword"
+            ng-blur="checkPassword()"
+            required /></label
+        ><br />
+        <label
+          >Security Question<input
+            type="text"
+            ng-model="user.securityQuestion"
+            disabled
+          />
+        </label>
+        <label
+          >Answer to the security question:<input
+            type="text"
+            placeholder="Answer"
+            ng-model="user.securityAnswer" ng-blur="checkAnswer()"
+            required
+        /></label>
+        <span class="Error">{{errMessage}}</span><br />
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" class="mdButton">
+      <span flex></span>
+      <md-button
+        type="button"
+        ng-click="modify(user)"
+        ng-disabled=" ErrorFound || userForm.$invalid "
+        >Submit
+      </md-button>
+      <md-button ng-click="cancel()"> Cancel </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

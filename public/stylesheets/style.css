@@ -72,9 +72,9 @@ a {
 }
 
 .log-form{
-  background-color: #bbbbbb;
-  width: 50%;
-	height: 50%;
+  background-color: #dbdada;
+  width: 53%;
+	height: 53%;
 	position: absolute;
 	top:0;
 	bottom: 0;
@@ -83,7 +83,13 @@ a {
 	margin: auto;
 }
 
-.log-form input[type=text],input[type="password"] {
+.log-form md-icon{
+  font-size: 70px;
+  margin-left: 40%;
+  margin-bottom: 3%;
+}
+
+.log-form input[type=number], .log-form input[type="password"] {
   width: 75% !important;
   padding: 12px;
   border: 1px solid black;
@@ -93,6 +99,7 @@ a {
   margin-bottom: 16px;
   resize: vertical;
   background-color: rgb(250 250 250);
+  margin-left: 10%;
 }
 
 /* Style the submit button with a specific background color etc */
@@ -103,7 +110,10 @@ a {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width:100%;
+  margin-left:2%;
+  width: 45%;
+  text-align: center;
+  display: inline-block;
 }
 
 /* When moving the mouse over the submit button, add a darker green color */
@@ -116,11 +126,19 @@ a {
   background-color: #FF85A1;
 }
 
+.log-form h2 {
+  background-color: black;
+  color:DodgerBlue;
+  margin-top: 0%;
+  padding-bottom: 2%;
+  text-align: center;
+}
+
 @media screen and (max-height: 740px) {
   .log-form{
     background-color: #bbbbbb;
     width: 50%;
-    height: 65% !important;
+    height: 72% !important;
     position: absolute;
     top:0;
     bottom: 0;
@@ -135,3 +153,23 @@ a {
     width: 92%;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .log-form md-icon{
+    font-size: 70px;
+    margin-left: 30%;
+    margin-bottom: 3%;
+  }
+}
+
+.md-dialog-content input[type=text],.md-dialog-content input[type="password"],.md-dialog-content select {
+  width: auto !important;
+  resize: vertical;
+  background-color: rgb(250 250 250);
+  margin-left: 1%;
+}
+
+.forgot{
+  margin-left: 10%; 
+}
+

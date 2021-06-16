@@ -1,6 +1,6 @@
-.topnav{
+.topnav {
   margin-top: 6%;
-  position:fixed;
+  position: fixed;
   z-index: 5;
   overflow: hidden;
   margin-right: 18px;
@@ -9,7 +9,7 @@
 .topnav input[type="button"] {
   float: right;
   color: white;
-  background-color:DodgerBlue;
+  background-color: DodgerBlue;
 }
 
 .topnav input[type="text"] {
@@ -17,7 +17,7 @@
   margin-top: 8px;
   font-size: 17px;
   overflow: hidden;
-  padding-right: .5em;
+  padding-right: 0.5em;
   border: 3px dotted DodgerBlue;
   width: auto !important;
 }
@@ -25,68 +25,86 @@
 .topnav button {
   padding: 6px 10px;
   margin-top: 8px;
-  margin-right: 16px;
-  background:DodgerBlue;
+  background: DodgerBlue;
   font-size: 17px;
   border: none;
   cursor: pointer;
+  color: white;
 }
 
 .topnav button:hover {
   background: #ccc;
 }
-.grid{
-  margin-top: 100px;
+.topnav input[type="button"] :disabled{
+  background-color: #FF85A1;
+}
+.refresh {
+  float: right;
+  margin-bottom: 2%;
+}
+.grid {
+  margin-top: 10%;
   overflow-y: auto;
   height: 75vh;
   border: 2px inset rgb(245, 243, 243);
-  width:105%;
+  width: 105%;
 }
-
+.spinner-border{
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
 @media screen and (max-width: 550px) {
   .topnav {
     margin-top: 15% !important;
     display: inline-block !important;
-    width:92%;
+    width: 92%;
   }
   .topnav input[type="text"] {
     width: 50% !important;
   }
   .topnav input[type="button"] {
-    width : 30%;
+    width: 30%;
     white-space: normal;
   }
-  .grid{
+  .grid {
+    margin-top: 25%;
     width: 100%;
   }
 }
 
 @media screen and (max-height: 600px) {
-  .grid{
+  .grid {
+    margin-top: 25%;
     height: 70vh !important;
   }
 }
 
-@media screen and (min-width: 250px) and (max-width : 300px) {
+@media screen and (min-width: 250px) and (max-width: 300px) {
   .topnav {
     margin-top: 20% !important;
     display: inline-block !important;
-    width:92%;
+    width: 92%;
   }
   .topnav input[type="text"] {
     width: 45% !important;
   }
   .topnav input[type="button"] {
-    width : 30%;
+    width: 30%;
     white-space: normal;
   }
 }
 
 @media screen and (max-width: 1060px) {
-  .topnav{
+  .topnav {
     width: 92%;
   }
-  .grid{
+  .grid {
+    margin-top: 25%;
     width: 100%;
   }
 }

@@ -1,9 +1,9 @@
 angular
-  .module("ProjectFormController", ["ProjectService"])
+  .module("ProjectFormController", ["ProjectService","LoginService"])
   .controller("ProjectFormController", [
-    "Project",
+    "Project","Login",
     "$location",
-    function (Project, $location) {
+    function (Project, Login , $location) {
       let vm = this;
       vm.disableName = Project.disableName;
       vm.Edit = Project.Edit;
@@ -22,6 +22,7 @@ angular
       vm.EditProject = function () {
         vm.Edit = true;
       };
+      vm.projectRights = Login.projectRights;
       vm.save = function (proj) {
         let technology = proj.Technology.split(",");
         proj.Technology = technology;

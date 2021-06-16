@@ -1,4 +1,4 @@
-input[type=text],input[type="number"], select , textarea {
+input[type=text],input[type="number"],input[type="password"], select , textarea {
     width: 100%; /* Full width */
     padding: 12px; /* Some padding */ 
     border: 1px solid black; /* Gray border */
@@ -33,12 +33,13 @@ input[type=text],input[type="number"], select , textarea {
     margin-top: 70px;
   }
   input[type=button]:disabled {
-    background-color: #FF85A1;
+    background-color: #FF85A1 !important;
   }
   input[type=text]:disabled,input[type=number]:disabled {
     background-color:  #ccc;
   }
   .Error{
     color :red;
-    font-size: large;
+    font-size: Medium;
+    font-weight: bold;
   }

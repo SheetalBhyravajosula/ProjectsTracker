@@ -8,47 +8,94 @@ const async = require("async");
 const exists = "Exists";
 const doesNotExist = "DoesNotExist";
 
+// exports.getTasks = function (callback) {
+//   TaskSchema.find({})
+//     .lean()
+//     .exec(async function (err, tasks) {
+//       if (err) {
+//         callback(false);
+//       } else {
+//         await Promise.all(
+//           tasks.map(async (task) => {
+//             await TaskTypeSchema.findOne(
+//               { _id: task.TaskType },
+//               function (e, taskType) {
+//                 if (e) {
+//                   callback(false);
+//                 }
+//                 task.TaskType = taskType && taskType.Description;
+//               }
+//             );
+//             await ProjectSchema.findOne(
+//               { _id: task.Project },
+//               function (er, proj) {
+//                 if (er) {
+//                   callback(false);
+//                 }
+//                 task.Project = proj && proj.ProjectName;
+//               }
+//             );
+//             await EmployeeSchema.findOne(
+//               { _id: task.Employee },
+//               function (error, emp) {
+//                 if (error) {
+//                   callback(false);
+//                 }
+//                 task.Employee = emp && emp.EmployeeId;
+//               }
+//             );
+//           })
+//         );
+//         callback(tasks);
+//       }
+//     });
+// };
+
 exports.getTasks = function (callback) {
-  TaskSchema.find({})
-    .lean()
-    .exec(async function (err, tasks) {
+  TaskSchema.aggregate(
+    [
+      {
+        $lookup: {
+          from: "TaskType",
+          localField: "TaskType",
+          foreignField: "_id",
+          as: "TaskTypeData",
+        },
+      },
+      { $unwind: "$TaskTypeData" },
+      { $set: { TaskType: "$TaskTypeData.Description" } },
+      { $unset: "TaskTypeData" },
+      {
+        $lookup: {
+          from: "Project",
+          localField: "Project",
+          foreignField: "_id",
+          as: "ProjectData",
+        },
+      },
+      { $unwind: "$ProjectData" },
+      { $set: { Project: "$ProjectData.ProjectName" } },
+      { $unset: "ProjectData" },
+      {
+        $lookup: {
+          from: "Associate",
+          localField: "Employee",
+          foreignField: "_id",
+          as: "EmployeeData",
+        },
+      },
+      { $unwind: "$EmployeeData" },
+      { $set: { Employee: "$EmployeeData.EmployeeId" } },
+      { $unset: "EmployeeData" },
+    ],
+    function (err, res) {
       if (err) {
         callback(false);
       } else {
-        await Promise.all(
-          tasks.map(async (task) => {
-            await TaskTypeSchema.findOne(
-              { _id: task.TaskType },
-              function (e, taskType) {
-                if (e) {
-                  callback(false);
-                }
-                task.TaskType = taskType && taskType.Description;
-              }
-            );
-            await ProjectSchema.findOne(
-              { _id: task.Project },
-              function (er, proj) {
-                if (er) {
-                  callback(false);
-                }
-                task.Project = proj && proj.ProjectName;
-              }
-            );
-            await EmployeeSchema.findOne(
-              { _id: task.Employee },
-              function (error, emp) {
-                if (error) {
-                  callback(false);
-                }
-                task.Employee = emp && emp.EmployeeId;
-              }
-            );
-          })
-        );
-        callback(tasks);
+        callback(res);
       }
-    });
+    }
+  );
 };
 
 exports.getTaskTypes = function (callback) {

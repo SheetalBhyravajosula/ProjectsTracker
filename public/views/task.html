@@ -1,31 +1,58 @@
 <div ng-cloak="">
-    <div class = "topnav">
-        <input type="text" placeholder="Search.." name="search" ng-model='searchText'>
-        <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        <input type="button" ng-click="TaskCtrl.AddNewTask()" value="Add New Task" />
-      </div>
-      <br>
-      <br>
-    <div class = "grid">
-    <md-grid-list md-cols-xs="1" md-cols-sm="1" md-cols-md="3" md-cols-lg="3" md-row-height="300px" >
-    <md-grid-tile ng-repeat="t in TaskCtrl.tasks | orderBy: sortDates:true | filter:searchText">
-        <md-card style="width:100%;">
+  <div class="topnav">
+    <input
+      type="text"
+      placeholder="Search.."
+      name="search"
+      ng-model="searchText"
+    />
+    <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
+    <input
+      type="button"
+      ng-click="TaskCtrl.AddNewTask()"
+      value="Add New Task"
+    /><br />
+    <button ng-click="TaskCtrl.getTasksAll()" style="float: right">
+      Refresh
+      <i class="glyphicon glyphicon-refresh" style="font-size: 24px"></i>
+    </button>
+  </div>
+  <br />
+  <br />
+  <div class="grid">
+    <div class="spinner-border text-info" ng-show="TaskCtrl.loading"></div>
+    <br /><br />
+    <md-grid-list
+      md-cols-xs="1"
+      md-cols-sm="1"
+      md-cols-md="3"
+      md-cols-lg="3"
+      md-row-height="300px"
+    >
+      <md-grid-tile
+        ng-repeat="t in TaskCtrl.tasks | orderBy: sortDates:true | filter:searchText"
+      >
+        <md-card style="width: 100%">
           <md-card-title>
             <md-card-title-text>
-              <span class="md-headline">Description: {{t.TaskDescription}}</span>
+              <span class="md-headline"
+                >Description: {{t.TaskDescription}}</span
+              >
               <span class="md-subhead">EmployeeID: {{t.Employee}}</span>
               <span class="md-subhead">Project: {{t.Project}}</span>
               <span class="md-subhead">Task Type: {{t.TaskType}}</span>
-              <span class="md-subhead">StartDate: {{t.startDate}} EndDate: {{t.endDate}}</span>
+              <span class="md-subhead"
+                >StartDate: {{t.startDate}} EndDate: {{t.endDate}}</span
+              >
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="TaskCtrl.View(t)">View</md-button>
-            <md-button ng-click="TaskCtrl.Edit(t)">Edit</md-button>
-            <md-button ng-click="TaskCtrl.Delete(t)">Delete</md-button>
+            <md-button ng-click="TaskCtrl.View(t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].view"  >View</md-button>
+            <md-button ng-click="TaskCtrl.Edit(t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].edit">Edit</md-button>
+            <md-button ng-click="TaskCtrl.Delete(t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].delete">Delete</md-button>
           </md-card-actions>
         </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+      </md-grid-tile>
+    </md-grid-list>
   </div>
 </div>
