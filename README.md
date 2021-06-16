@@ -79,7 +79,7 @@ To get a local copy up and running follow these simple example steps.
    npm install
    ```
 3. Npm start
- ```sh
+   ```sh
    npm start
    ```
    
