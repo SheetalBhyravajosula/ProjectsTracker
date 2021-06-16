@@ -3,9 +3,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-
-  <h3 align="center">Best-README-Template</h3>
-
   <p align="center">
     Easiest way to manage projects and tasks of team.
   </p>
@@ -37,7 +34,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](./images/productScreenshot.PNG)
+[product-screenshot](./images/productScreenshot.PNG)
 
 Manage all your team's work in one place and improve accountability.
 Facing difficulty in figuring out what tasks your team is doing in different projects? Then you need one solution to check all your teams members updates!
