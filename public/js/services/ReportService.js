@@ -22,11 +22,11 @@ angular
       );
       return deffered.promise;
     };
-    this.getTasksByEmpId = function (employee) {
+    this.getTasksByEmpId = function (EmployeeId) {
       var deffered = $q.defer();
       var req = {
         method: "GET",
-        url: "/reports/getTasksbyEmpID/" + employee.EmployeeId,
+        url: "/reports/getTasksbyEmpID/" + EmployeeId,
         headers: this.headers,
       };
       $http(req).then(

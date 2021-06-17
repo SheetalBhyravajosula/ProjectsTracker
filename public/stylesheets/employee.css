@@ -58,6 +58,9 @@
   margin-left: -50px;
   margin-top: -50px;
 }
+.profile{
+  margin-top: 8%;  
+}
 @media screen and (max-width: 550px) {
   .topnav {
     margin-top: 15% !important;
@@ -81,6 +84,19 @@
   .grid {
     margin-top: 25%;
     height: 70vh !important;
+  }
+  .profile{
+    margin-top: 13%;  
+  }
+}
+
+@media screen and (max-height: 1040px) {
+  .grid {
+    margin-top: 25%;
+    height: 70vh !important;
+  }
+  .profile{
+    margin-top: 13%;  
   }
 }
 

@@ -1,7 +1,6 @@
 angular
   .module("EmployeeController", [
     "EmployeeService",
-    "ProjectService",
     "LoginService",
     "ngMaterial",
   ])
@@ -75,6 +74,7 @@ angular
         $scope.loginSuccess = Login.loginSuccess;
         this.userName = "";
         this.password = "";
+        $location.path("/");
       };
       vm.getEmployeesAll = function () {
         vm.loading = true;

@@ -137,13 +137,12 @@ angular
         }
       };
       this.getFormattedEmployeeDetails = async function (user) {
-        await Report.getTasksByEmpId(user)
+        await Report.getTasksByEmpId(user.EmployeeId)
           .then((response) => {
             user.Tasks = response.data.data;
             this.currentEmployeeDetails = user;
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
             user.Tasks = [];
           });
         return user;

@@ -64,7 +64,6 @@ angular
           Task.createTask(vm.task)
             .then(function (response) {
               vm.disable = true;
-              console.log(response);
               $location.path("/tasks");
             })
             .catch(function (err) {
@@ -74,7 +73,6 @@ angular
           Task.modifyTask(vm.task)
             .then(function (response) {
               vm.disable = true;
-              console.log(response);
               $location.path("/tasks");
             })
             .catch(function (err) {

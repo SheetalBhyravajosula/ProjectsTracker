@@ -1,5 +1,65 @@
-<div class="jumbotron">
-    <h1>Profile Page</h1>
-
-    
+<div class="profile">
+  <md-card
+    md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}"
+    md-theme-watch
+  >
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Name: {{User.EmployeeName}}</span>
+        <span class="md-subhead">EmployeeID: {{User.EmployeeId}}</span>
+        <span class="md-subhead">Project: {{User.Project}}</span>
+        <span class="md-subhead">Bill Rate: {{User.BillRate}}</span>
+        <span class="md-subhead">Role: {{User.role}}</span>
+        <span class="md-subhead">Total No of tasks: {{User.TasksNum}}</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="showTasks()">My Tasks</md-button>
+        <md-button ng-click="EditProfile(User)">Edit Profile</md-button>
+      </md-card-actions>
+    </md-card-actions>
+  </md-card>
+</div>
+<div class="grid" ng-show="show">
+  <br /><br />
+  <md-grid-list
+    md-cols-xs="1"
+    md-cols-sm="1"
+    md-cols-md="3"
+    md-cols-lg="3"
+    md-row-height="300px"
+  >
+    <md-grid-tile
+      ng-repeat="t in User.Tasks | orderBy: sortDates:true"
+    >
+      <md-card style="width: 100%">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Description: {{t.TaskDescription}}</span>
+            <span class="md-subhead">EmployeeID: {{t.Employee}}</span>
+            <span class="md-subhead">Project: {{t.Project}}</span>
+            <span class="md-subhead">Task Type: {{t.TaskType}}</span>
+            <span class="md-subhead"
+              >StartDate: {{t.startDate}} EndDate: {{t.endDate}}</span
+            >
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button
+            ng-click="View(t)"
+            >View</md-button
+          >
+          <md-button
+            ng-click="Edit(t)"
+            >Edit</md-button
+          >
+          <md-button
+            ng-click="Delete(t)"
+           >Delete</md-button
+          >
+        </md-card-actions>
+      </md-card>
+    </md-grid-tile>
+  </md-grid-list>
 </div>

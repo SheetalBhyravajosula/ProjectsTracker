@@ -10,7 +10,8 @@ angular.module("appRoutes", []).config([
         controller: "MainController",
       })
       .when("/profile", {
-        templateUrl: "views/profile.html"
+        templateUrl: "views/profile.html",
+        controller: "ProfileController",
       })
       .when("/settings", {
         templateUrl: "views/settings.html"
