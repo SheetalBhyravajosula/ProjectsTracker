@@ -2,54 +2,8 @@ const TaskSchema = require("../schemas/tasksSchema");
 const TaskTypeSchema = require("../schemas/taskTypeSchema");
 const EmployeeSchema = require("../schemas/employeeSchema");
 const ProjectSchema = require("../schemas/projectSchema");
-const employeeService = require("./employeeServices");
-const projectService = require("./projectServices");
-const async = require("async");
 const exists = "Exists";
 const doesNotExist = "DoesNotExist";
-
-// exports.getTasks = function (callback) {
-//   TaskSchema.find({})
-//     .lean()
-//     .exec(async function (err, tasks) {
-//       if (err) {
-//         callback(false);
-//       } else {
-//         await Promise.all(
-//           tasks.map(async (task) => {
-//             await TaskTypeSchema.findOne(
-//               { _id: task.TaskType },
-//               function (e, taskType) {
-//                 if (e) {
-//                   callback(false);
-//                 }
-//                 task.TaskType = taskType && taskType.Description;
-//               }
-//             );
-//             await ProjectSchema.findOne(
-//               { _id: task.Project },
-//               function (er, proj) {
-//                 if (er) {
-//                   callback(false);
-//                 }
-//                 task.Project = proj && proj.ProjectName;
-//               }
-//             );
-//             await EmployeeSchema.findOne(
-//               { _id: task.Employee },
-//               function (error, emp) {
-//                 if (error) {
-//                   callback(false);
-//                 }
-//                 task.Employee = emp && emp.EmployeeId;
-//               }
-//             );
-//           })
-//         );
-//         callback(tasks);
-//       }
-//     });
-// };
 
 exports.getTasks = function (callback) {
   TaskSchema.aggregate(
