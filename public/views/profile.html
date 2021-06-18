@@ -1,4 +1,4 @@
-<div class="profile">
+<div class="profile" ng-hide="formEdit">
   <md-card
     md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}"
     md-theme-watch
@@ -21,7 +21,7 @@
     </md-card-actions>
   </md-card>
 </div>
-<div class="grid" ng-show="show">
+<div class="gridProfile" ng-show="show">
   <br /><br />
   <md-grid-list
     md-cols-xs="1"

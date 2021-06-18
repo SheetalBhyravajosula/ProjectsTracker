@@ -1,13 +1,16 @@
 angular
-  .module("ProfileController", ["LoginService","TaskService","ReportService"])
+  .module("ProfileController", ["LoginService", "TaskService", "ReportService","EmployeeService"])
   .controller("ProfileController", [
-    "Login","Task","Report",
+    "Login",
+    "Task",
+    "Report","Employee",
+    "$location",
     "$scope",
-    function (Login,Task,Report, $scope) {
+    function (Login, Task, Report,Employee, $location, $scope) {
       let vm = this;
       $scope.User = Login.currentUser;
       $scope.show = false;
-      vm.getAllTasks = function(user){
+      vm.getAllTasks = function (user) {
         Report.getTasksByEmpId(user.EmployeeId)
           .then(function (response) {
             vm.taskData = response.data.data;
@@ -16,14 +19,15 @@ angular
               task.endDate = moment(task.TaskEndDate).format("DD-MM-YYYY");
             });
             $scope.User.Tasks = vm.taskData;
-            $scope.User.TasksNum = $scope.User.Tasks && $scope.User.Tasks.length;
+            $scope.User.TasksNum =
+              $scope.User.Tasks && $scope.User.Tasks.length;
           })
           .catch((err) => {
             console.log(err);
             $scope.User.Tasks = [];
             $scope.User.TasksNum = 0;
           });
-      }
+      };
       vm.getAllTasks($scope.User);
       $scope.showTasks = function () {
         $scope.show = !$scope.show;
@@ -38,17 +42,23 @@ angular
           .then(function (response) {
             console.log(response);
             $scope.TasksNum = $scope.TasksNum - 1;
-            $scope.User.Tasks = $scope.User.Tasks.filter(item => item !== response.data.data)
+            $scope.User.Tasks = $scope.User.Tasks.filter(
+              (item) => item !== response.data.data
+            );
           })
           .catch(function (err) {
             console.log(err);
           });
-          vm.getAllTasks($scope.User);
+        vm.getAllTasks($scope.User);
       };
       $scope.View = function (task) {
         Task.setTask(task);
         Task.setFormType(false);
         $location.path("/tasks/" + task.TaskDescription);
+      };
+      $scope.EditProfile = function (employee) {
+        Employee.setEmployee(employee);
+        $location.path("/employees/" + employee.EmployeeId);
       };
     },
   ]);

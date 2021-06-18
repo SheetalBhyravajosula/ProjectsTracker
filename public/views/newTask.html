@@ -1,54 +1,91 @@
 <div class="formContainer" ng-show="NewTaskCtrl.Edit">
-    <form class="simple-form" name= "TaskForm">
-      <label>Description: <textarea ng-model="NewTaskCtrl.task.TaskDescription" rows="4" cols="50" ng-disabled='NewTaskCtrl.disable' required></textarea></label
-      ><br />
-      <label
+  <form class="simple-form" name="TaskForm">
+    <label
+      >Description:
+      <textarea
+        ng-model="NewTaskCtrl.task.TaskDescription"
+        rows="4"
+        cols="50"
+        ng-disabled="NewTaskCtrl.disable"
+        required
+      ></textarea></label
+    ><br />
+    <label
       >Task Type:
       <select ng-model="NewTaskCtrl.task.TaskType" required>
-        <option ng-repeat="t in NewTaskCtrl.taskTypes" value="{{t.Description}}">
-            {{t.Description}}
+        <option
+          ng-repeat="t in NewTaskCtrl.taskTypes"
+          value="{{t.Description}}"
+        >
+          {{t.Description}}
         </option>
       </select></label
     ><br />
-      <label
-        >Project:
-        <select ng-model="NewTaskCtrl.task.Project" required>
-          <option ng-repeat="p in NewTaskCtrl.projects" value="{{p.ProjectName}}">
-            {{p.ProjectName}}
-          </option>
-        </select></label
-      ><br />
-      <label
-        >Employee:
-        <select ng-model="NewTaskCtrl.task.Employee" required>
-          <option ng-repeat="e in NewTaskCtrl.employees | filter: {Project: NewTaskCtrl.task.Project}" value="{{e.EmployeeId}}">
-            {{e.EmployeeId}}
-          </option>
-        </select></label
-      ><br />
-      <label>Task Start Date:<md-datepicker 
-        ng-model = "NewTaskCtrl.task.TaskStartDate" 
-        md-placeholder = "Enter Start date" required></md-datepicker></label
-      ><br />
-      <label>Task End Date:<md-datepicker 
-        ng-model = "NewTaskCtrl.task.TaskEndDate"
-        md-placeholder = "Enter End date" ng-change="NewTaskCtrl.checkDate()" required></md-datepicker></label
-        ><br />
-        <span class="Error">{{NewTaskCtrl.errMessage}}</span><br />
-        <label>Duration: <input type="number" ng-model="NewTaskCtrl.task.Duration" required/></label
-          ><br />
-      <input type="button" ng-disabled="NewTaskCtrl.saveDisabled || TaskForm.$invalid || NewTaskCtrl.errMessage==='Start Date should be earlier than End Date'" ng-click="NewTaskCtrl.save(NewTaskCtrl.task)" value="Submit"/>
-      </form>
-  </div>
-  <div class="formContainer" ng-hide="NewTaskCtrl.Edit">
-    <form novalidate class="simple-form">
-      <label>Description : </label> {{NewTaskCtrl.task.TaskDescription}}<br />
-      <label>Task Type : </label> {{NewTaskCtrl.task.TaskType}}<br />
-      <label>Project : </label> {{NewTaskCtrl.task.Project}} <br />
-      <label>Employee : </label> {{NewTaskCtrl.task.Employee}}<br />
-      <label>Task Start Date : </label> {{NewTaskCtrl.task.TaskStartDate}}<br />
-      <label>Task End Date : </label> {{NewTaskCtrl.task.TaskEndDate}}<br />
-      <label>Duration : </label> {{NewTaskCtrl.task.Duration}}<br />
-      <input type="button" ng-click="NewTaskCtrl.EditTask()" ng-disabled = "!NewTaskCtrl.taskRights[NewTaskCtrl.task.Employee].edit" value="Edit" />
-    </form>
-  </div>
+    <label
+      >Project:
+      <select ng-model="NewTaskCtrl.task.Project" required>
+        <option ng-repeat="p in NewTaskCtrl.projects" value="{{p.ProjectName}}">
+          {{p.ProjectName}}
+        </option>
+      </select></label
+    ><br />
+    <label
+      >Employee:
+      <select ng-model="NewTaskCtrl.task.Employee" required>
+        <option
+          ng-repeat="e in NewTaskCtrl.employees | filter: {Project: NewTaskCtrl.task.Project}"
+          value="{{e.EmployeeId}}"
+        >
+          {{e.EmployeeId}}
+        </option>
+      </select></label
+    ><br />
+    <label
+      >Task Start Date:<md-datepicker
+        ng-model="NewTaskCtrl.task.TaskStartDate"
+        md-placeholder="Enter Start date"
+        required
+      ></md-datepicker></label
+    ><br />
+    <label
+      >Task End Date:<md-datepicker
+        ng-model="NewTaskCtrl.task.TaskEndDate"
+        md-placeholder="Enter End date"
+        ng-change="NewTaskCtrl.checkDate()"
+        required
+      ></md-datepicker></label
+    ><br />
+    <span class="Error">{{NewTaskCtrl.errMessage}}</span><br />
+    <label
+      >Duration:
+      <input
+        type="number"
+        ng-model="NewTaskCtrl.task.Duration"
+        required /></label
+    ><br />
+    <input
+      type="button"
+      ng-disabled="NewTaskCtrl.saveDisabled || TaskForm.$invalid || NewTaskCtrl.errMessage==='Start Date should be earlier than End Date'"
+      ng-click="NewTaskCtrl.save(NewTaskCtrl.task)"
+      value="Submit"
+    />
+    <input type="button" ng-click="NewTaskCtrl.goBack()" value="Cancel" />
+  </form>
+</div>
+<div class="formContainer" ng-hide="NewTaskCtrl.Edit">
+  <form novalidate class="simple-form">
+    <label>Description : </label> {{NewTaskCtrl.task.TaskDescription}}<br />
+    <label>Task Type : </label> {{NewTaskCtrl.task.TaskType}}<br />
+    <label>Project : </label> {{NewTaskCtrl.task.Project}} <br />
+    <label>Employee : </label> {{NewTaskCtrl.task.Employee}}<br />
+    <label>Task Start Date : </label> {{NewTaskCtrl.task.TaskStartDate}}<br />
+    <label>Task End Date : </label> {{NewTaskCtrl.task.TaskEndDate}}<br />
+    <label>Duration : </label> {{NewTaskCtrl.task.Duration}}<br />
+    <input
+      type="button"
+      ng-click="NewTaskCtrl.EditTask()"
+      ng-disabled="!NewTaskCtrl.taskRights[NewTaskCtrl.task.Employee].edit"
+      value="Edit"
+    />
+  </form>
+</div>

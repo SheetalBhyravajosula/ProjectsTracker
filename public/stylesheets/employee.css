@@ -61,6 +61,30 @@
 .profile{
   margin-top: 8%;  
 }
+
+@media screen and (min-width: 250px) and (max-width: 300px) {
+  .topnav {
+    margin-top: 20% !important;
+    display: inline-block !important;
+    width: 92%;
+  }
+  .topnav input[type="text"] {
+    width: 45% !important;
+  }
+  .topnav input[type="button"] {
+    width: 30%;
+    white-space: normal;
+  }
+}
+
+.gridProfile {
+  margin-top: 5%;
+  overflow-y: auto;
+  height: 75vh;
+  border: 2px inset rgb(245, 243, 243);
+  width: 105%;
+}
+
 @media screen and (max-width: 550px) {
   .topnav {
     margin-top: 15% !important;
@@ -78,11 +102,19 @@
     margin-top: 25%;
     width: 100%;
   }
+  .gridProfile {
+    margin-top: 15%;
+    width: 100%;
+  }
 }
 
 @media screen and (max-height: 600px) {
   .grid {
     margin-top: 25%;
+    height: 70vh !important;
+  }
+  .gridProfile {
+    margin-top: 15%;
     height: 70vh !important;
   }
   .profile{
@@ -95,32 +127,22 @@
     margin-top: 25%;
     height: 70vh !important;
   }
+  .gridProfile {
+    margin-top: 15%;
+    height: 70vh !important;
+  }
   .profile{
     margin-top: 13%;  
   }
 }
 
-@media screen and (min-width: 250px) and (max-width: 300px) {
-  .topnav {
-    margin-top: 20% !important;
-    display: inline-block !important;
-    width: 92%;
-  }
-  .topnav input[type="text"] {
-    width: 45% !important;
-  }
-  .topnav input[type="button"] {
-    width: 30%;
-    white-space: normal;
-  }
-}
-
 @media screen and (max-width: 1060px) {
-  .topnav {
-    width: 92%;
-  }
   .grid {
     margin-top: 25%;
+    width: 100%;
+  }
+  .gridProfile {
+    margin-top: 15%;
     width: 100%;
   }
 }

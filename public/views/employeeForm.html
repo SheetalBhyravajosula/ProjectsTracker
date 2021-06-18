@@ -1,19 +1,43 @@
 <div class="formContainer">
-  <form class="simple-form" name= "EmployeeForm">
-    <label>Name: <input type="text" ng-model="EmployeeFormCtrl.employee.EmployeeName" required/></label
+  <form class="simple-form" name="EmployeeForm">
+    <label
+      >Name:
+      <input
+        type="text"
+        ng-model="EmployeeFormCtrl.employee.EmployeeName"
+        required /></label
     ><br />
-    <label>ID: <input type="number" ng-model="EmployeeFormCtrl.employee.EmployeeId" ng-disabled="EmployeeFormCtrl.disableID" required/></label
+    <label
+      >ID:
+      <input
+        type="number"
+        ng-model="EmployeeFormCtrl.employee.EmployeeId"
+        ng-disabled="EmployeeFormCtrl.disableID"
+        required /></label
     ><br />
     <label
       >Project:
       <select ng-model="EmployeeFormCtrl.employee.Project" required>
-        <option ng-repeat="p in EmployeeFormCtrl.projects" value="{{p.ProjectName}}">
+        <option
+          ng-repeat="p in EmployeeFormCtrl.projects"
+          value="{{p.ProjectName}}"
+        >
           {{p.ProjectName}}
         </option>
       </select></label
     ><br />
-    <label>Bill Rate:<input type="text" ng-model="EmployeeFormCtrl.employee.BillRate" required/></label
+    <label
+      >Bill Rate:<input
+        type="text"
+        ng-model="EmployeeFormCtrl.employee.BillRate"
+        required /></label
     ><br />
-    <input type="button" ng-disabled="EmployeeFormCtrl.saveDisabled || EmployeeForm.$invalid" ng-click="EmployeeFormCtrl.save(EmployeeFormCtrl.employee)" value="Submit"/>
-    </form>
+    <input
+      type="button"
+      ng-disabled="EmployeeFormCtrl.saveDisabled || EmployeeForm.$invalid"
+      ng-click="EmployeeFormCtrl.save(EmployeeFormCtrl.employee)"
+      value="Submit"
+    />
+    <input type="button" ng-click="EmployeeFormCtrl.goBack()" value="Cancel" />
+  </form>
 </div>

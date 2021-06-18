@@ -11,8 +11,9 @@ angular
     "Project",
     "Task",
     "Login",
+    "$window",
     "$location",
-    function (Employee, Project, Task, Login, $location) {
+    function (Employee, Project, Task, Login, $window, $location) {
       let vm = this;
       vm.Edit = Task.Edit;
       vm.disable = Task.disable;
@@ -82,6 +83,9 @@ angular
       };
       vm.EditTask = function () {
         vm.Edit = true;
+      };
+      vm.goBack = function () {
+        $window.history.back();
       };
     },
   ]);

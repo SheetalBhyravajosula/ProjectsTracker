@@ -1,9 +1,11 @@
 angular
-  .module("ProjectFormController", ["ProjectService","LoginService"])
+  .module("ProjectFormController", ["ProjectService", "LoginService"])
   .controller("ProjectFormController", [
-    "Project","Login",
+    "Project",
+    "Login",
     "$location",
-    function (Project, Login , $location) {
+    "$window",
+    function (Project, Login, $location, $window) {
       let vm = this;
       vm.disableName = Project.disableName;
       vm.Edit = Project.Edit;
@@ -50,6 +52,9 @@ angular
               console.log(err);
             });
         }
+      };
+      vm.goBack = function () {
+        $window.history.back();
       };
     },
   ]);

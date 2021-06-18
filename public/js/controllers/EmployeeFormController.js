@@ -1,7 +1,7 @@
 angular
   .module("EmployeeFormController", ["EmployeeService", "ProjectService"])
-  .controller("EmployeeFormController", ["Employee","Project","$location",
-    function (Employee, Project,$location) {
+  .controller("EmployeeFormController", ["Employee","Project","$location","$window",
+    function (Employee, Project,$location,$window) {
       let vm = this;
       vm.disableID = Employee.disableID;
       vm.employee = Employee.employee;
@@ -32,5 +32,8 @@ angular
             });
         }
       };
+      vm.goBack = function(){
+        $window.history.back();
+      }
     },
   ]);
