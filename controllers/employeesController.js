@@ -21,12 +21,12 @@ exports.createEmployee = function (req, res) {
     if (result == false) {
       res.status(500).json({
         status: "Internal Server Error",
-        message: `Could not create employee ${employee.employeeId} error occured`,
+        message: `Could not create employee ${employee.EmployeeId} error occured`,
       });
     } else if (result == "Exists") {
       res.status(500).json({
         status: "failure",
-        message: `Could not create employee ${employee.employeeId}:${result} already exists`,
+        message: `Could not create employee ${employee.EmployeeId}:${result}`,
       });
     } else {
       res.status(200).json({

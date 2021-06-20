@@ -37,7 +37,7 @@ angular
             $scope.type = "SignUpSuccess";
             $scope.print = "Sign Up Success";
             $scope.LoginMessage =
-              "Thanks for registering! Please click on Login/Close to Redirect to Projects Tracker Login Page";
+              "Thanks for registering! Please click on Close to Redirect to Projects Tracker Page";
           })
           .catch((err) => {
             $scope.errMessage =
@@ -79,7 +79,7 @@ angular
             $scope.type = "SignUpSuccess";
             $scope.print = "Password Changed!";
             $scope.LoginMessage =
-              "Password Changed Successfully! Please click on Login/Close to Redirect to Projects Tracker Login Page";
+              "Password Changed Successfully! Please click on Close to Redirect to Projects Tracker Page";
           })
           .catch((err) => {
             console.log(err);

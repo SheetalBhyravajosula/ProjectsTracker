@@ -49,7 +49,7 @@
           <md-card-actions layout="row" layout-align="end center">
             <md-button ng-click="TaskCtrl.View(t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].view"  >View</md-button>
             <md-button ng-click="TaskCtrl.Edit(t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].edit">Edit</md-button>
-            <md-button ng-click="TaskCtrl.Delete(t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].delete">Delete</md-button>
+            <md-button ng-click="TaskCtrl.Delete($event,t)" ng-disabled = "!TaskCtrl.taskRights[t.Employee].delete">Delete</md-button>
           </md-card-actions>
         </md-card>
       </md-grid-tile>

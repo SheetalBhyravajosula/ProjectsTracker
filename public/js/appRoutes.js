@@ -14,7 +14,8 @@ angular.module("appRoutes", []).config([
         controller: "ProfileController",
       })
       .when("/settings", {
-        templateUrl: "views/settings.html"
+        templateUrl: "views/settings.html",
+        controller:"SettingsController"
       })
 
       .when("/tasks/newTask", {

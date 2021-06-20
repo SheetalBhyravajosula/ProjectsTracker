@@ -3,8 +3,8 @@ angular
   .controller("ProjectController", [
     "Project",
     "Login",
-    "$location",
-    function (Project, Login, $location) {
+    "$location","$scope","$mdDialog",
+    function (Project, Login, $location,$scope,$mdDialog) {
       let vm = this;
       vm.projData = Project.projects;
       vm.AddDisabled = true;
@@ -39,15 +39,23 @@ angular
         Project.setFormType(false);
         $location.path("/projects/" + project.ProjectName);
       };
-      vm.Delete = function (project) {
-        Project.deleteProject(project)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-        vm.allProjects();
+      vm.Delete = function (ev,project) {
+        let config = {
+          controller: "DeleteModalController",
+          templateUrl: "views/deleteModal.html",
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true,
+          fullscreen: $scope.customFullscreen,
+          locals: {
+            obj: project,
+            type: "Project",
+            DeleteMessage:"Are you sure you want to delete?\nDeleting Project will delete all the corresponding employees and tasks !"
+          },
+        };
+        $mdDialog.show(config).then(() => {
+          vm.allProjects();
+        });
       };
     },
   ]);

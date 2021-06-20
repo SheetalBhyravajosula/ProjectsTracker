@@ -63,8 +63,9 @@ angular
         vm.task = task;
         if (Task.task == null || Task.task == undefined) {
           Task.createTask(vm.task)
-            .then(function (response) {
+            .then(async function (response) {
               vm.disable = true;
+              await Login.setUserPermissions();
               $location.path("/tasks");
             })
             .catch(function (err) {

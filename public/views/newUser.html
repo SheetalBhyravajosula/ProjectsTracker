@@ -85,18 +85,13 @@
         >
       </div>
     </md-dialog-content>
-
-    <md-dialog-actions layout="row">
-      <span flex></span>
-      <md-button ng-click="cancel()"> Login </md-button>
-    </md-dialog-actions>
   </form>
   <form name="userForm" ng-cloak ng-switch-when="Forgot">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Change Password</h2>
         <span flex></span>
-        <md-button class="closebtn" ng-click="cancel()">Close </md-button>
+        <md-button class="closebtn" ng-click="hide()">Close </md-button>
       </div>
     </md-toolbar>
 

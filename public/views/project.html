@@ -9,7 +9,8 @@
     <button type="submit"><i class="glyphicon glyphicon-search"></i></button>
     <input
       type="button"
-      ng-click="ProjectCtrl.AddNewProject()" ng-disabled="ProjectCtrl.AddDisabled"
+      ng-click="ProjectCtrl.AddNewProject()"
+      ng-disabled="ProjectCtrl.AddDisabled"
       value="Add New Project"
     /><br />
     <button ng-click="ProjectCtrl.allProjects()" style="float: right">
@@ -51,7 +52,7 @@
               >Edit</md-button
             >
             <md-button
-              ng-click="ProjectCtrl.Delete(p)"
+              ng-click="ProjectCtrl.Delete($event,p)"
               ng-disabled="!ProjectCtrl.projectRights[p.ProjectName].delete"
               >Delete</md-button
             >

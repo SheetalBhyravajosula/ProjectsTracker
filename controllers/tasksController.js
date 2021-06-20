@@ -66,7 +66,7 @@ exports.createTask = function(req, res) {
         } else if (result=="Exists") {
             res.status(500).json({
                 status: 'failure',
-                message: `Could not create task ${task.TaskDescription}:${result} already exists`
+                message: `Could not create task ${task.TaskDescription}:${result}`
               });
         } else {
             res.status(200).json({

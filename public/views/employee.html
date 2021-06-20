@@ -42,7 +42,7 @@
           </md-card-title>
           <md-card-actions layout="row" layout-align="end center">
             <md-button ng-click="EmployeeCtrl.Edit(e)" ng-disabled = "!EmployeeCtrl.employeeRights[e.EmployeeId].edit">Edit</md-button>
-            <md-button ng-click="EmployeeCtrl.Delete(e)" ng-disabled = "!EmployeeCtrl.employeeRights[e.EmployeeId].delete">Delete</md-button>
+            <md-button ng-click="EmployeeCtrl.Delete($event,e)" ng-disabled = "!EmployeeCtrl.employeeRights[e.EmployeeId].delete">Delete</md-button>
           </md-card-actions>
         </md-card>
       </md-grid-tile>

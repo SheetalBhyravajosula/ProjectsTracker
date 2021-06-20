@@ -54,7 +54,7 @@ angular
         this.userName = "";
         this.password = "";
       };
-      $scope.showAdvanced = function (ev, type) {
+      $scope.openPopup = function (ev, type) {
         let config = {
           controller: "NewUserController",
           templateUrl: "views/newUser.html",
@@ -102,15 +102,23 @@ angular
         Employee.setEmployee(null);
         $location.path("/employees/new");
       };
-      vm.Delete = function (employee) {
-        Employee.deleteEmployee(employee)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (err) {
-            console.log(err);
-          });
-        vm.getEmployeesAll();
+      vm.Delete = function (ev, employee) {
+        let config = {
+          controller: "DeleteModalController",
+          templateUrl: "views/deleteModal.html",
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose: true,
+          fullscreen: $scope.customFullscreen,
+          locals: {
+            obj: employee,
+            type: "Employee",
+            DeleteMessage:"Are you sure you want to delete?\nDeleting Employee will delete all the corresponding tasks !"
+          },
+        };
+        $mdDialog.show(config).then(() => {
+          vm.getEmployeesAll();
+        });
       };
     },
   ]);

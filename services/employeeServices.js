@@ -31,38 +31,38 @@ exports.getEmployees = function (callback) {
 exports.createEmployee = function (employee, callback) {
   employeeSchema.exists(
     {
-      EmployeeId: employee.employeeId,
+      EmployeeId: employee.EmployeeId,
     },
-    async function (error, bool) {
+    function (error, bool) {
       if (error) {
         console.log(error);
         callback(false);
       } else if (bool) {
         callback(exists);
       } else {
-        await projectSchema.findOne(
+        projectSchema.findOne(
           { ProjectName: employee.Project },
           function (err, proj) {
             if (err) {
               callback(false);
             }
             employee.Project = proj && proj._id;
+            const new_employee = new employeeSchema({
+              EmployeeId: employee.EmployeeId,
+              EmployeeName: employee.EmployeeName,
+              BillRate: employee.BillRate,
+              Project: employee.Project,
+            });
+            new_employee.save(function (err, saved) {
+              if (err) {
+                console.log(err);
+                callback(false);
+              } else {
+                callback(saved);
+              }
+            });
           }
         );
-        const new_employee = new employeeSchema({
-          EmployeeId: employee.EmployeeId,
-          EmployeeName: employee.EmployeeName,
-          BillRate: employee.BillRate,
-          Project: employee.Project,
-        });
-        new_employee.save(function (err, saved) {
-          if (err) {
-            console.log(err);
-            callback(false);
-          } else {
-            callback(saved);
-          }
-        });
       }
     }
   );

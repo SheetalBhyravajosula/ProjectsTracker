@@ -1,4 +1,5 @@
 <div class="profile" ng-hide="formEdit">
+  <h1>My Profile</h1>
   <md-card
     md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}"
     md-theme-watch
@@ -30,9 +31,7 @@
     md-cols-lg="3"
     md-row-height="300px"
   >
-    <md-grid-tile
-      ng-repeat="t in User.Tasks | orderBy: sortDates:true"
-    >
+    <md-grid-tile ng-repeat="t in User.Tasks | orderBy: sortDates:true">
       <md-card style="width: 100%">
         <md-card-title>
           <md-card-title-text>
@@ -46,18 +45,9 @@
           </md-card-title-text>
         </md-card-title>
         <md-card-actions layout="row" layout-align="end center">
-          <md-button
-            ng-click="View(t)"
-            >View</md-button
-          >
-          <md-button
-            ng-click="Edit(t)"
-            >Edit</md-button
-          >
-          <md-button
-            ng-click="Delete(t)"
-           >Delete</md-button
-          >
+          <md-button ng-click="View(t)">View</md-button>
+          <md-button ng-click="Edit(t)">Edit</md-button>
+          <md-button ng-click="Delete(t)">Delete</md-button>
         </md-card-actions>
       </md-card>
     </md-grid-tile>

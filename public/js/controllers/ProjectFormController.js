@@ -31,10 +31,12 @@ angular
         vm.p = proj;
         if (Project.project === null) {
           Project.createProject(vm.p)
-            .then(function (response) {
+            .then(async function (response) {
               vm.disableName = true;
               console.log(response);
               Project.setProject(vm.project);
+              Project.projects.push(vm.project)
+              await Login.setUserPermissions();
               $location.path("/projects");
             })
             .catch(function (err) {

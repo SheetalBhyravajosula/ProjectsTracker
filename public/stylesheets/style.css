@@ -81,6 +81,7 @@ a {
 	left: 0;
 	right: 0;
 	margin: auto;
+  border: 4px inset rgb(245, 243, 243);
 }
 
 .log-form md-icon{

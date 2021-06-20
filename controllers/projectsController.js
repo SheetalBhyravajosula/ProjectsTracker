@@ -56,12 +56,12 @@ exports.createProject = function (req, res) {
     if (result == false) {
       res.status(500).json({
         status: "Internal Server Error",
-        message: `Could not create project ${project.projectName} error occured`,
+        message: `Could not create project ${project.ProjectName} error occured`,
       });
     } else if (result == "Exists") {
       res.status(500).json({
         status: "failure",
-        message: `Could not create project ${project.projectName}:${result} already exists`,
+        message: `Could not create project ${project.ProjectName}:${result} already exists`,
       });
     } else {
       res.status(200).json({
