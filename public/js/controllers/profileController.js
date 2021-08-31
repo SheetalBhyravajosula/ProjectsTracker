@@ -1,32 +1,42 @@
 angular
-  .module("ProfileController", ["LoginService", "TaskService", "ReportService","EmployeeService"])
+  .module("ProfileController", [
+    "LoginService",
+    "TaskService",
+    "ReportService",
+    "EmployeeService",
+  ])
   .controller("ProfileController", [
     "Login",
     "Task",
-    "Report","Employee",
+    "Report",
+    "Employee",
     "$location",
     "$scope",
-    function (Login, Task, Report,Employee, $location, $scope) {
+    function (Login, Task, Report, Employee, $location, $scope) {
       let vm = this;
       $scope.User = Login.currentUser;
       $scope.show = false;
       vm.getAllTasks = function (user) {
-        Report.getTasksByEmpId(user.EmployeeId)
-          .then(function (response) {
-            vm.taskData = response.data.data;
-            vm.taskData.forEach((task) => {
-              task.startDate = moment(task.TaskStartDate).format("DD-MM-YYYY");
-              task.endDate = moment(task.TaskEndDate).format("DD-MM-YYYY");
+        if (user) {
+          Report.getTasksByEmpId(user.EmployeeId)
+            .then(function (response) {
+              vm.taskData = response.data.data;
+              vm.taskData.forEach((task) => {
+                task.startDate = moment(task.TaskStartDate).format(
+                  "DD-MM-YYYY"
+                );
+                task.endDate = moment(task.TaskEndDate).format("DD-MM-YYYY");
+              });
+              $scope.User.Tasks = vm.taskData;
+              $scope.User.TasksNum =
+                $scope.User.Tasks && $scope.User.Tasks.length;
+            })
+            .catch((err) => {
+              console.log(err);
+              $scope.User.Tasks = [];
+              $scope.User.TasksNum = 0;
             });
-            $scope.User.Tasks = vm.taskData;
-            $scope.User.TasksNum =
-              $scope.User.Tasks && $scope.User.Tasks.length;
-          })
-          .catch((err) => {
-            console.log(err);
-            $scope.User.Tasks = [];
-            $scope.User.TasksNum = 0;
-          });
+        }
       };
       vm.getAllTasks($scope.User);
       $scope.showTasks = function () {

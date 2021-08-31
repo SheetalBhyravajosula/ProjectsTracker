@@ -17,6 +17,7 @@ angular
       this.projectRights = new Array();
       this.taskRights = new Array();
       this.currentEmployeeDetails = null;
+      this.currentUser = null;
       this.rights = {
         view: true,
         edit: true,

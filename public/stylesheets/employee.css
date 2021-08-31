@@ -85,7 +85,7 @@
   width: 105%;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 500px) {
   .topnav {
     margin-top: 15% !important;
     display: inline-block !important;
@@ -110,7 +110,7 @@
 
 @media screen and (max-height: 600px) {
   .grid {
-    margin-top: 25%;
+    margin-top: 15%;
     height: 70vh !important;
   }
   .gridProfile {

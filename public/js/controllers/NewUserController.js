@@ -41,7 +41,7 @@ angular
           })
           .catch((err) => {
             $scope.errMessage =
-              "Couldn't complete registration! Please try again";
+              "Couldn't complete registration! Please try again (check if the user already exists)";
             $scope.ErrorFound = true;
             console.log(err);
           });
